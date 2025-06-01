@@ -24,9 +24,9 @@ describe('HelpTooltip Component', () => {
   it('shows tooltip content on icon click', async () => {
     const user = userEvent.setup();
     render(<HelpTooltip helpKey={testHelpKey} />);
-    
+
     const helpIcon = screen.getByRole('button', { name: `Help for ${testHelpKey}` });
-    
+
     // Tooltip should not be visible initially
     expect(screen.queryByText(testHelpMessage)).not.toBeInTheDocument();
     expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
@@ -66,7 +66,7 @@ describe('HelpTooltip Component', () => {
     await user.click(closeButton);
     expect(screen.queryByText(testHelpMessage)).not.toBeInTheDocument();
   });
-  
+
   it('hides tooltip content on clicking outside', async () => {
     const user = userEvent.setup();
     render(
@@ -80,7 +80,7 @@ describe('HelpTooltip Component', () => {
     // Click to show tooltip
     await user.click(helpIcon);
     expect(screen.getByText(testHelpMessage)).toBeInTheDocument();
-    
+
     // Click outside
     await user.click(screen.getByTestId('outside-area'));
     expect(screen.queryByText(testHelpMessage)).not.toBeInTheDocument();

@@ -16,7 +16,7 @@ const StartNewMessageForm: React.FC<StartNewMessageFormProps> = ({ onNewThreadCr
   const [subject, setSubject] = useState(''); // Optional subject
 
   const [potentialRecipients, setPotentialRecipients] = useState<UserProfile[]>([]);
-  
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loadingUsers, setLoadingUsers] = useState(true);
@@ -62,8 +62,8 @@ const StartNewMessageForm: React.FC<StartNewMessageFormProps> = ({ onNewThreadCr
       // 1. Create the message thread
       const { data: threadData, error: threadError } = await supabase
         .from('message_threads')
-        .insert({ 
-            tenant_id: profile.tenant_id, 
+        .insert({
+            tenant_id: profile.tenant_id,
             subject: subject.trim() === '' ? null : subject.trim(),
             updated_at: new Date().toISOString() // Set initial updated_at
         })
@@ -107,7 +107,7 @@ const StartNewMessageForm: React.FC<StartNewMessageFormProps> = ({ onNewThreadCr
       setLoading(false);
     }
   };
-  
+
   if (loadingUsers) {
     return <p className="p-4 text-center text-gray-500">Loading potential recipients...</p>;
   }
@@ -122,11 +122,11 @@ const StartNewMessageForm: React.FC<StartNewMessageFormProps> = ({ onNewThreadCr
           To: <span className="text-red-500 ml-1">*</span>
           <HelpTooltip helpKey="messaging_selectRecipient" />
         </label>
-        <select 
-            id="recipient_id" 
-            value={recipientId} 
-            onChange={(e) => setRecipientId(e.target.value)} 
-            required 
+        <select
+            id="recipient_id"
+            value={recipientId}
+            onChange={(e) => setRecipientId(e.target.value)}
+            required
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         >
           <option value="">-- Select Recipient --</option>
@@ -135,17 +135,17 @@ const StartNewMessageForm: React.FC<StartNewMessageFormProps> = ({ onNewThreadCr
           ))}
         </select>
       </div>
-      
+
       <div>
         <label htmlFor="subject_message" className="flex items-center text-sm font-medium text-gray-700">
           Subject (Optional)
           <HelpTooltip helpKey="messaging_subject" />
         </label>
-        <input 
-            type="text" 
-            id="subject_message" 
-            value={subject} 
-            onChange={(e) => setSubject(e.target.value)} 
+        <input
+            type="text"
+            id="subject_message"
+            value={subject}
+            onChange={(e) => setSubject(e.target.value)}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             placeholder="Conversation subject"
         />
@@ -157,11 +157,11 @@ const StartNewMessageForm: React.FC<StartNewMessageFormProps> = ({ onNewThreadCr
           Message <span className="text-red-500 ml-1">*</span>
            <HelpTooltip helpKey="messaging_content" />
         </label>
-        <textarea 
-            id="message_content" 
-            value={messageContent} 
-            onChange={(e) => setMessageContent(e.target.value)} 
-            required 
+        <textarea
+            id="message_content"
+            value={messageContent}
+            onChange={(e) => setMessageContent(e.target.value)}
+            required
             rows={5}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             placeholder="Type your first message..."
@@ -178,20 +178,20 @@ const StartNewMessageForm: React.FC<StartNewMessageFormProps> = ({ onNewThreadCr
       </div>
        <style jsx>{`
         .btn-primary {
-          display: inline-flex; justify-content: center; align-items: center; 
-          padding-left: 1rem; padding-right: 1rem; padding-top: 0.5rem; padding-bottom: 0.5rem; 
-          border-width: 1px; border-color: transparent; 
-          border-radius: 0.375rem; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); 
-          font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; 
+          display: inline-flex; justify-content: center; align-items: center;
+          padding-left: 1rem; padding-right: 1rem; padding-top: 0.5rem; padding-bottom: 0.5rem;
+          border-width: 1px; border-color: transparent;
+          border-radius: 0.375rem; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+          font-size: 0.875rem; line-height: 1.25rem; font-weight: 500;
           color: white; background-color: #4f46e5; /* indigo-600 */
         }
         .btn-primary:hover { background-color: #4338ca; /* indigo-700 */ }
         .btn-secondary {
-          display: inline-flex; justify-content: center; align-items: center; 
-          padding-left: 1rem; padding-right: 1rem; padding-top: 0.5rem; padding-bottom: 0.5rem; 
+          display: inline-flex; justify-content: center; align-items: center;
+          padding-left: 1rem; padding-right: 1rem; padding-top: 0.5rem; padding-bottom: 0.5rem;
           border-width: 1px; border-color: #D1D5DB; /* gray-300 */
-          border-radius: 0.375rem; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); 
-          font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; 
+          border-radius: 0.375rem; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+          font-size: 0.875rem; line-height: 1.25rem; font-weight: 500;
           color: #374151; /* gray-700 */ background-color: white;
         }
         .btn-secondary:hover { background-color: #F9FAFB; /* gray-50 */ }

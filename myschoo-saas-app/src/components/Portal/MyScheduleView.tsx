@@ -125,7 +125,7 @@ const MyScheduleView: React.FC<MyScheduleViewProps> = ({ studentId }) => {
 
       {loading && <p className="text-center text-gray-500 py-4">Loading schedule...</p>}
       {error && <p className="text-center text-red-500 py-4 bg-red-100 p-3 rounded-md">{error}</p>}
-      
+
       {!loading && !error && schedule.length === 0 && (
         <p className="text-center text-gray-500 py-6">
             <HelpTooltip helpKey="portal_schedule_noSchedule" position="bottom" /> No schedule information available for the selected period.

@@ -13,7 +13,7 @@ const DisciplinePage: React.FC = () => {
   const [incidents, setIncidents] = useState<DisplayableDisciplineIncident[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
+
   const [showReportForm, setShowReportForm] = useState(false);
   const [showDetailsView, setShowDetailsView] = useState(false);
   const [incidentToEdit, setIncidentToEdit] = useState<DisciplineIncident | null>(null);
@@ -44,14 +44,14 @@ const DisciplinePage: React.FC = () => {
       if (filterStudentId) query = query.eq('student_id', filterStudentId);
       if (filterTypeId) query = query.eq('incident_type_id', filterTypeId);
       if (filterStatus) query = query.eq('status', filterStatus);
-        
+
       // Non-admins (teachers) might have more restricted view based on RLS (e.g., only see what they reported)
       // The RLS policy handles this, so no explicit client-side role check is strictly needed for the query itself,
       // but it's good to be aware of for UI/UX.
 
       const { data, error: fetchError } = await query;
       if (fetchError) throw fetchError;
-      
+
       const displayData = (data || []).map(inc => ({
           ...inc,
           student_name: `${inc.students?.first_name || ''} ${inc.students?.last_name || ''}`.trim() || 'N/A',
@@ -67,7 +67,7 @@ const DisciplinePage: React.FC = () => {
       setLoading(false);
     }
   }, [filterStudentId, filterTypeId, filterStatus]);
-  
+
   // Fetch data for filters
   useEffect(() => {
     const fetchFilterData = async () => {
@@ -110,7 +110,7 @@ const DisciplinePage: React.FC = () => {
     setShowDetailsView(true);
     setShowReportForm(false);
   };
-  
+
   const handleEditIncident = (incident: DisciplineIncident) => {
     setIncidentToEdit(incident);
     setShowDetailsView(false); // Close details view if open
@@ -125,7 +125,7 @@ const DisciplinePage: React.FC = () => {
     // If details view was for the edited item, update it or close it
     if(incidentToView?.id === savedIncident.id) {
         // Potentially refetch the single incident for details view or just close
-        setShowDetailsView(false); 
+        setShowDetailsView(false);
         setIncidentToView(null);
     }
   };
@@ -134,7 +134,7 @@ const DisciplinePage: React.FC = () => {
     setShowReportForm(false);
     setIncidentToEdit(null);
   };
-  
+
   const handleDetailsClose = () => {
       setShowDetailsView(false);
       setIncidentToView(null);
@@ -200,8 +200,8 @@ const DisciplinePage: React.FC = () => {
           onCancel={handleFormCancel}
         />
       ) : showDetailsView && incidentToView ? (
-        <IncidentDetailsView 
-            incident={incidentToView} 
+        <IncidentDetailsView
+            incident={incidentToView}
             onClose={handleDetailsClose}
             onEdit={handleEditIncident}
         />

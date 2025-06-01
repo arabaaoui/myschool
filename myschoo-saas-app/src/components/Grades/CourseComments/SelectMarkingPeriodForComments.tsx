@@ -7,11 +7,11 @@ interface SelectMarkingPeriodForCommentsProps {
   onMarkingPeriodSelect: (markingPeriodId: string, markingPeriodName: string) => void;
   currentSelection?: string | null;
   // Optionally, pass academicYearId from selected CoursePeriod to filter marking periods
-  academicYearId?: string | null; 
+  academicYearId?: string | null;
 }
 
-const SelectMarkingPeriodForComments: React.FC<SelectMarkingPeriodForCommentsProps> = ({ 
-    onMarkingPeriodSelect, 
+const SelectMarkingPeriodForComments: React.FC<SelectMarkingPeriodForCommentsProps> = ({
+    onMarkingPeriodSelect,
     currentSelection,
     academicYearId
 }) => {
@@ -33,7 +33,7 @@ const SelectMarkingPeriodForComments: React.FC<SelectMarkingPeriodForCommentsPro
         if (academicYearId) {
           query = query.eq('academic_year_id', academicYearId);
         }
-        
+
         const { data, error: fetchError } = await query;
 
         if (fetchError) throw fetchError;
@@ -65,7 +65,7 @@ const SelectMarkingPeriodForComments: React.FC<SelectMarkingPeriodForCommentsPro
         onMarkingPeriodSelect('', 'None');
     }
   };
-  
+
   if (error) {
     return <p className="text-sm text-red-500 py-2 bg-red-50 p-2 rounded">{error}</p>;
   }

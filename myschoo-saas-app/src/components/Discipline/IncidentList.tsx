@@ -36,9 +36,9 @@ const IncidentList: React.FC<IncidentListProps> = ({
 
   const formatDate = (dateString: string | undefined | null) => {
     if (!dateString) return 'N/A';
-    return new Date(dateString).toLocaleString(undefined, { 
-        year: 'numeric', month: 'short', day: 'numeric', 
-        hour: '2-digit', minute: '2-digit' 
+    return new Date(dateString).toLocaleString(undefined, {
+        year: 'numeric', month: 'short', day: 'numeric',
+        hour: '2-digit', minute: '2-digit'
     });
   };
 
@@ -88,8 +88,8 @@ const IncidentList: React.FC<IncidentListProps> = ({
               <td className="hidden lg:table-cell px-4 py-3 sm:px-6 sm:py-4 whitespace-nowrap">
                  <span
                     className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                        incident.status === 'Resolved' ? 'bg-green-100 text-green-800' : 
-                        incident.status === 'Escalated' ? 'bg-yellow-100 text-yellow-800' : 
+                        incident.status === 'Resolved' ? 'bg-green-100 text-green-800' :
+                        incident.status === 'Escalated' ? 'bg-yellow-100 text-yellow-800' :
                         'bg-blue-100 text-blue-800' // Pending Review or other
                     }`}
                     >

@@ -96,7 +96,7 @@ const AttendanceCodesPage: React.FC = () => {
     setShowForm(false);
     setCodeToEdit(null);
   };
-  
+
   if (!isTenantAdmin && !loading) { // If not admin and finished initial loading check
     return (
         <div className="p-4 md:p-6">

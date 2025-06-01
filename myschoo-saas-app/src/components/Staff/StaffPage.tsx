@@ -3,16 +3,16 @@ import { supabase } from '../../supabaseClient';
 import StaffList from './StaffList';
 import StaffForm from './StaffForm';
 import InviteStaffForm from './InviteStaffForm'; // Import the new InviteStaffForm
-import { UserProfile } from '../../types'; 
+import { UserProfile } from '../../types';
 import HelpTooltip from '../common/HelpTooltip';
-import { useAuth } from '../../App'; 
+import { useAuth } from '../../App';
 
 const StaffPage: React.FC = () => {
-  const { user, isTenantAdmin } = useAuth(); 
+  const { user, isTenantAdmin } = useAuth();
   const [staffMembers, setStaffMembers] = useState<UserProfile[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
+
   const [showEditForm, setShowEditForm] = useState(false);
   const [showInviteForm, setShowInviteForm] = useState(false); // State for invite form
   const [staffToEdit, setStaffToEdit] = useState<UserProfile | null>(null);
@@ -62,19 +62,19 @@ const StaffPage: React.FC = () => {
     setStaffMembers((prevStaff) =>
       prevStaff.map((s) => (s.id === savedStaffMember.id ? savedStaffMember : s))
     );
-    setStaffMembers(currentStaff => [...currentStaff].sort((a, b) => 
+    setStaffMembers(currentStaff => [...currentStaff].sort((a, b) =>
         (a.full_name || '').localeCompare(b.full_name || ''))
     );
     setShowEditForm(false);
     setStaffToEdit(null);
   };
-  
+
   const handleInvitationSent = () => {
     setShowInviteForm(false);
     // Optionally, refresh the staff list to show the invited user (who will be inactive)
     // Or inform the admin that the invitation has been sent and the user will appear once they accept.
     // For now, we can just close the form. A full refresh might be good UX.
-    fetchStaffMembers(); 
+    fetchStaffMembers();
   };
 
 
@@ -83,7 +83,7 @@ const StaffPage: React.FC = () => {
     setShowInviteForm(false);
     setStaffToEdit(null);
   };
-  
+
   if (!isTenantAdmin && !loading) {
       return (
           <div className="p-4 md:p-6">
@@ -119,7 +119,7 @@ const StaffPage: React.FC = () => {
             onInvitationSent={handleInvitationSent}
             onCancel={handleFormCancel}
         />
-      ) : showEditForm && staffToEdit ? ( 
+      ) : showEditForm && staffToEdit ? (
         <StaffForm
           staffMemberToEdit={staffToEdit}
           onSave={handleFormSave}

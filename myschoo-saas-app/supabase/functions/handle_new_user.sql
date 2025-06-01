@@ -9,7 +9,7 @@ DECLARE
   final_role TEXT;
   final_full_name TEXT;
   user_email TEXT;
-  
+
   -- Variables to capture invited user details from raw_app_meta_data
   invited_tenant_id_text TEXT;
   invited_role_text TEXT;
@@ -33,7 +33,7 @@ BEGIN
       final_full_name := split_part(user_email, '@', 1); -- Default full_name from email prefix
     END IF;
     -- is_active will be FALSE by default from table schema for invited users
-    
+
     -- Optional: Log that an invited user's profile is being created
     -- RAISE LOG 'Invited user profile creation for email % with role % in tenant %', user_email, final_role, final_tenant_id;
 
@@ -42,7 +42,7 @@ BEGIN
     INSERT INTO public.tenants (name)
     VALUES ('School for ' || user_email)
     RETURNING id INTO final_tenant_id;
-    
+
     final_role := 'admin';
     final_full_name := split_part(user_email, '@', 1); -- Default full_name from email prefix
     -- is_active will be FALSE by default. User needs to complete profile/activation.
@@ -67,12 +67,12 @@ BEGIN
   -- Update auth.users table with the definitive tenant_id and role for JWT claims.
   -- Remove the temporary 'invited_*' fields.
   UPDATE auth.users
-  SET raw_app_meta_data = COALESCE(raw_app_meta_data, '{}'::jsonb) 
-    - 'invited_tenant_id' 
-    - 'invited_role' 
-    - 'invited_full_name' 
+  SET raw_app_meta_data = COALESCE(raw_app_meta_data, '{}'::jsonb)
+    - 'invited_tenant_id'
+    - 'invited_role'
+    - 'invited_full_name'
     || jsonb_build_object(
-        'tenant_id', final_tenant_id::text, 
+        'tenant_id', final_tenant_id::text,
         'role', final_role
        )
   WHERE id = NEW.id;
@@ -82,7 +82,7 @@ END;
 $$;
 
 -- Trigger to call handle_new_user on new user creation in auth.users
-DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users; 
+DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
 CREATE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
   FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();

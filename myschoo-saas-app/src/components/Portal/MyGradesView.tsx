@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../../supabaseClient';
 import HelpTooltip from '../common/HelpTooltip';
-import { StudentGrade } from '../../types'; 
-import { Assignment } from '../Grades/Assignments/AssignmentForm'; 
+import { StudentGrade } from '../../types';
+import { Assignment } from '../Grades/Assignments/AssignmentForm';
 
 interface MyGradesViewProps {
   studentId: string;
@@ -10,7 +10,7 @@ interface MyGradesViewProps {
 
 interface CoursePeriodOption {
   id: string;
-  name: string; 
+  name: string;
   course_name: string;
   marking_period_name: string;
 }
@@ -33,7 +33,7 @@ const MyGradesView: React.FC<MyGradesViewProps> = ({ studentId }) => {
   const [selectedCoursePeriodId, setSelectedCoursePeriodId] = useState<string>('');
   const [grades, setGrades] = useState<GradeWithAssignmentDetails[]>([]);
   const [overallGrade, setOverallGrade] = useState<OverallGradeDataPortal | null>(null);
-  
+
   const [loading, setLoading] = useState(false); // Combined loading state
   const [error, setError] = useState<string | null>(null);
 
@@ -53,10 +53,10 @@ const MyGradesView: React.FC<MyGradesViewProps> = ({ studentId }) => {
             )
           `)
           .eq('student_id', studentId)
-          .is('withdrawal_date', null); 
+          .is('withdrawal_date', null);
 
         if (enrollError) throw enrollError;
-        
+
         const options: CoursePeriodOption[] = (data || []).map((e: any) => ({
           id: e.course_periods.id,
           name: e.course_periods.name,
@@ -65,7 +65,7 @@ const MyGradesView: React.FC<MyGradesViewProps> = ({ studentId }) => {
         }));
         setCoursePeriods(options);
         if (options.length > 0) {
-          setSelectedCoursePeriodId(options[0].id); 
+          setSelectedCoursePeriodId(options[0].id);
         } else {
           setError("You are not currently enrolled in any classes, or no classes have been set up for you.");
           setLoading(false); // Stop loading if no classes
@@ -95,11 +95,11 @@ const MyGradesView: React.FC<MyGradesViewProps> = ({ studentId }) => {
         .select(`
           *,
           assignments (
-            title, 
-            max_points, 
+            title,
+            max_points,
             due_date,
             assignment_type_id,
-            assignment_types (name) 
+            assignment_types (name)
           )
         `)
         .eq('student_id', studentId)
@@ -108,7 +108,7 @@ const MyGradesView: React.FC<MyGradesViewProps> = ({ studentId }) => {
 
       if (gradesError) throw gradesError;
       setGrades(gradesData || []);
-      
+
       // Fetch overall grade
       const { data: overallGradeData, error: overallGradeError } = await supabase
         .from('course_period_overall_grades_view')
@@ -116,7 +116,7 @@ const MyGradesView: React.FC<MyGradesViewProps> = ({ studentId }) => {
         .eq('student_id', studentId)
         .eq('course_period_id', selectedCoursePeriodId)
         .single();
-      
+
       if (overallGradeError && overallGradeError.code !== 'PGRST116') { // PGRST116: single row not found, which is fine
         throw overallGradeError;
       }
@@ -161,7 +161,7 @@ const MyGradesView: React.FC<MyGradesViewProps> = ({ studentId }) => {
             className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           >
             <option value="">-- Select a Class --</option>
-            {coursePeriods.map(cp => 
+            {coursePeriods.map(cp =>
                 <option key={cp.id} value={cp.id}>
                     {cp.course_name} - {cp.name} ({cp.marking_period_name})
                 </option>
@@ -172,7 +172,7 @@ const MyGradesView: React.FC<MyGradesViewProps> = ({ studentId }) => {
 
       {loading && <p className="text-center text-gray-500 py-4">Loading grades...</p>}
       {error && <p className="text-center text-red-500 py-4 bg-red-100 p-3 rounded-md">{error}</p>}
-      
+
       {!loading && !error && grades.length === 0 && selectedCoursePeriodId && (
         <p className="text-center text-gray-500 py-6">
             <HelpTooltip helpKey="portal_grades_noGrades" position="bottom" /> No grades found for this class.

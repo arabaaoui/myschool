@@ -10,11 +10,11 @@ const TakeAttendancePage: React.FC = () => {
   const { user } = useAuth(); // Get current user
   const [selectedCoursePeriodId, setSelectedCoursePeriodId] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  
+
   const [enrolledStudents, setEnrolledStudents] = useState<StudentEnrollmentWithStudent[]>([]);
   const [attendanceCodes, setAttendanceCodes] = useState<AttendanceCode[]>([]);
   const [existingRecords, setExistingRecords] = useState<AttendanceRecord[]>([]);
-  
+
   const [loadingSheet, setLoadingSheet] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -51,7 +51,7 @@ const TakeAttendancePage: React.FC = () => {
       const { data: enrollmentsData, error: enrollmentsError } = await supabase
         .from('student_enrollments')
         .select(`
-          id, 
+          id,
           student_id,
           course_period_id,
           enrollment_date,
@@ -61,7 +61,7 @@ const TakeAttendancePage: React.FC = () => {
         .eq('course_period_id', coursePeriodId)
         .lte('enrollment_date', date) // Enrolled on or before the attendance date
         .or(`withdrawal_date.is.null,withdrawal_date.gt.${date}`); // Not withdrawn, or withdrawn after the attendance date
-        
+
       if (enrollmentsError) throw enrollmentsError;
       // Ensure students data is correctly typed/accessed
       const validEnrollments = (enrollmentsData || []).filter(e => e.students).map(e => e as StudentEnrollmentWithStudent)
@@ -106,7 +106,7 @@ const TakeAttendancePage: React.FC = () => {
       // Upsert logic: Insert new records, update existing ones based on unique constraint (student_enrollment_id, attendance_date)
       const { error: saveError } = await supabase
         .from('attendance_records')
-        .upsert(recordsToSave, { 
+        .upsert(recordsToSave, {
             onConflict: 'student_enrollment_id, attendance_date',
             // ignoreDuplicates: false, // default is false, so it will update
          });
@@ -124,7 +124,7 @@ const TakeAttendancePage: React.FC = () => {
       setLoadingSheet(false);
     }
   };
-  
+
   if (!isCurrentUserTeacher) {
       return (
           <div className="p-4 md:p-6">

@@ -7,18 +7,18 @@ import { useAuth, useToasts } from '../../App'; // Import useToasts
 
 export interface DisciplineIncident {
   id?: string;
-  tenant_id?: string; 
+  tenant_id?: string;
   student_id: string;
   incident_type_id: string;
-  incident_date?: string; 
+  incident_date?: string;
   reported_by_user_id?: string | null;
   description_of_incident: string;
   action_taken?: string | null;
-  status?: string | null; 
+  status?: string | null;
 }
 
 interface ReportIncidentFormProps {
-  incidentToEdit?: DisciplineIncident | null; 
+  incidentToEdit?: DisciplineIncident | null;
   onSave: (incident: DisciplineIncident) => void;
   onCancel: () => void;
 }
@@ -29,7 +29,7 @@ const ReportIncidentForm: React.FC<ReportIncidentFormProps> = ({ incidentToEdit,
   const [formData, setFormData] = useState<DisciplineIncident>({
     student_id: '',
     incident_type_id: '',
-    incident_date: new Date().toISOString().slice(0, 16), 
+    incident_date: new Date().toISOString().slice(0, 16),
     reported_by_user_id: user?.id || null,
     description_of_incident: '',
     action_taken: null,
@@ -57,7 +57,7 @@ const ReportIncidentForm: React.FC<ReportIncidentFormProps> = ({ incidentToEdit,
         const { data: typesData, error: typesError } = await supabase
           .from('discipline_incident_types')
           .select('id, name')
-          .eq('is_active', true) 
+          .eq('is_active', true)
           .order('name', { ascending: true });
         if (typesError) throw typesError;
         setIncidentTypes(typesData || []);
@@ -100,10 +100,10 @@ const ReportIncidentForm: React.FC<ReportIncidentFormProps> = ({ incidentToEdit,
 
     try {
       let resultIncident: DisciplineIncident;
-      const dataToSave = { 
+      const dataToSave = {
         ...formData,
-        reported_by_user_id: formData.reported_by_user_id || user?.id, 
-        incident_date: new Date(formData.incident_date!).toISOString(), 
+        reported_by_user_id: formData.reported_by_user_id || user?.id,
+        incident_date: new Date(formData.incident_date!).toISOString(),
       };
 
       if (incidentToEdit && incidentToEdit.id) {
@@ -137,7 +137,7 @@ const ReportIncidentForm: React.FC<ReportIncidentFormProps> = ({ incidentToEdit,
       setLoading(false);
     }
   };
-  
+
   if (loadingDropdowns) {
     return <p className="text-center text-gray-500 py-4">Loading form data...</p>;
   }
@@ -194,8 +194,8 @@ const ReportIncidentForm: React.FC<ReportIncidentFormProps> = ({ incidentToEdit,
         </label>
         <textarea id="action_taken" name="action_taken" value={formData.action_taken || ''} onChange={handleChange} rows={2} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
       </div>
-      
-      { (user?.app_metadata?.role === 'admin') && 
+
+      { (user?.app_metadata?.role === 'admin') &&
         <div>
             <label htmlFor="status" className="flex items-center text-sm font-medium text-gray-700">
             Status

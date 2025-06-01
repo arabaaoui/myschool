@@ -129,7 +129,7 @@
   "report_studentProgress_selectMarkingPeriod": "Optional: Select a marking period to scope the report. If not selected, all marking periods will be included.",
   "report_studentProgress_generateButton": "Generate the student progress report based on your selections.",
   "report_studentProgress_printButton": "Print the generated report.",
-  
+
   "report_attendanceSummary_intro": "View attendance summaries. Filter by class, student, or date range.",
   "report_attendanceSummary_selectClass": "Optional: Select a specific class to view its attendance summary.",
   "report_attendanceSummary_selectStudent": "Optional: Select a specific student to view their attendance summary across all classes.",
@@ -165,7 +165,7 @@
   "incidentTypeForm_isActive": "Indicates if this incident type is currently active and can be selected when reporting new incidents.",
   "incidentTypeList_editButton": "Edit this incident type.",
   "incidentTypeList_deleteButton": "Delete this incident type. Only possible if no incidents are linked to it.",
-  
+
   "disciplineIncidents_reportForm_intro": "Report a new disciplinary incident.",
   "disciplineIncidentForm_student": "Select the student involved in the incident.",
   "disciplineIncidentForm_incidentType": "Select the type of incident.",
@@ -194,7 +194,7 @@
   "assignFeeForm_amount": "The amount for this specific fee instance. Defaults from the fee type.",
   "assignFeeForm_dueDate": "The date by which this fee should be paid.",
   "assignFeeForm_descriptionOverride": "Optional: Add specific details or override the default fee description for this instance.",
-  
+
   "studentBilling_recordPayment_intro": "Record a payment made by or for a student.",
   "recordPaymentForm_student": "Select the student for whom this payment is being recorded.",
   "recordPaymentForm_amountPaid": "The amount of the payment received.",

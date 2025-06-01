@@ -24,7 +24,7 @@ interface StudentFormProps {
   studentToEdit?: Student | null;
   onSave: (student: Student) => void;
   onCancel: () => void;
-  currentUser: User | null; 
+  currentUser: User | null;
 }
 
 const StudentForm: React.FC<StudentFormProps> = ({
@@ -43,7 +43,7 @@ const StudentForm: React.FC<StudentFormProps> = ({
     student_identifier: null,
     enrollment_date: null,
     notes: null,
-    ...studentToEdit, 
+    ...studentToEdit,
   });
 
   const [loading, setLoading] = useState(false);
@@ -92,7 +92,7 @@ const StudentForm: React.FC<StudentFormProps> = ({
     try {
       let resultStudent: Student;
       const studentDataForSupabase = { ...formData };
-      
+
       if (studentToEdit && studentToEdit.id) {
         const { data, error: updateError } = await supabase
           .from('students')
@@ -214,7 +214,7 @@ const StudentForm: React.FC<StudentFormProps> = ({
             placeholder="e.g., Asian, Hispanic, Black, White, etc."
           />
         </div>
-        
+
         {/* Grade Level */}
         <div>
           <label htmlFor="current_grade_level_id" className="flex items-center text-sm font-medium text-gray-700">

@@ -16,7 +16,7 @@ WITH course_attendance_summary AS (
         public.attendance_codes ac ON ar.attendance_code_id = ac.id
     JOIN
         public.course_periods cp ON ar.course_period_id = cp.id -- To link to marking_period_id for filtering
-    WHERE 
+    WHERE
         ar.tenant_id = public.get_current_tenant_id()
     GROUP BY
         ar.student_id,
@@ -58,21 +58,21 @@ JOIN
 LEFT JOIN
     public.user_profiles up_teacher ON cp.teacher_id = up_teacher.id
 LEFT JOIN
-    public.course_period_overall_grades_view overall_grades 
-    ON s.id = overall_grades.student_id 
+    public.course_period_overall_grades_view overall_grades
+    ON s.id = overall_grades.student_id
     AND cp.id = overall_grades.course_period_id
     AND mp.id = overall_grades.marking_period_id -- Ensure overall grade is for the correct marking period context if applicable
 LEFT JOIN
-    public.report_card_course_comments rccc 
-    ON s.id = rccc.student_id 
-    AND cp.id = rccc.course_period_id 
+    public.report_card_course_comments rccc
+    ON s.id = rccc.student_id
+    AND cp.id = rccc.course_period_id
     AND mp.id = rccc.marking_period_id
 LEFT JOIN
     course_attendance_summary cas
     ON s.id = cas.student_id
     AND cp.id = cas.course_period_id
     AND mp.id = cas.marking_period_id -- Ensure attendance summary matches the report card's marking period
-LEFT JOIN 
+LEFT JOIN
     public.grade_levels gl ON s.current_grade_level_id = gl.id -- Added join for grade level
 WHERE
     s.tenant_id = public.get_current_tenant_id() -- Primary tenant isolation

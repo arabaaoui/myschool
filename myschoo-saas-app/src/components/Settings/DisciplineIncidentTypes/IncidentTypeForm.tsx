@@ -28,7 +28,7 @@ const IncidentTypeForm: React.FC<IncidentTypeFormProps> = ({ typeToEdit, onSave,
 
   useEffect(() => {
     if (typeToEdit) {
-      setFormData({ 
+      setFormData({
         ...typeToEdit,
         is_active: typeToEdit.is_active === undefined ? true : typeToEdit.is_active,
        });
@@ -55,7 +55,7 @@ const IncidentTypeForm: React.FC<IncidentTypeFormProps> = ({ typeToEdit, onSave,
 
     try {
       let resultType: DisciplineIncidentType;
-      const dataToSave = { 
+      const dataToSave = {
         ...formData,
         description: formData.description?.trim() === '' ? null : formData.description,
       };
@@ -126,7 +126,7 @@ const IncidentTypeForm: React.FC<IncidentTypeFormProps> = ({ typeToEdit, onSave,
           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
       </div>
-      
+
       <div className="flex items-start">
         <div className="flex items-center h-5">
             <input

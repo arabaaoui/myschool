@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../../App'; 
+import { useAuth } from '../../App';
 import MyScheduleView from './MyScheduleView';
 import MyAttendanceView from './MyAttendanceView';
 import MyGradesView from './MyGradesView';
 import MyBillingView from './MyBillingView'; // Import MyBillingView
 import HelpTooltip from '../common/HelpTooltip';
-import { supabase } from '../../supabaseClient'; 
+import { supabase } from '../../supabaseClient';
 
 interface LinkedStudent {
-  id: string; 
+  id: string;
   name: string;
 }
 
@@ -16,7 +16,7 @@ type PortalView = 'dashboard' | 'schedule' | 'attendance' | 'grades' | 'billing'
 
 const PortalDashboard: React.FC = () => {
   const { user, isStudent, isParent, linkedStudents: contextLinkedStudents, currentStudentId: contextCurrentStudentId, setCurrentStudentId: contextSetCurrentStudentId } = useAuth();
-  
+
   const [localLinkedStudents, setLocalLinkedStudents] = useState<LinkedStudent[]>(contextLinkedStudents || []);
   const [selectedStudentId, setSelectedStudentId] = useState<string | null>(contextCurrentStudentId || null);
   const [currentView, setCurrentView] = useState<PortalView>('dashboard');
@@ -45,7 +45,7 @@ const PortalDashboard: React.FC = () => {
             }
         };
         fetchStudentId();
-    } else if (isParent && user?.id && !contextLinkedStudents?.length) { 
+    } else if (isParent && user?.id && !contextLinkedStudents?.length) {
       setLoadingStudents(true);
       const fetchStudents = async () => {
         try {
@@ -62,7 +62,7 @@ const PortalDashboard: React.FC = () => {
           setLocalLinkedStudents(students);
           if (students.length > 0 && contextSetCurrentStudentId) {
             if (!selectedStudentId || !students.find(s => s.id === selectedStudentId)) {
-                contextSetCurrentStudentId(students[0].id); 
+                contextSetCurrentStudentId(students[0].id);
                 setSelectedStudentId(students[0].id);
             }
           }
@@ -89,14 +89,14 @@ const PortalDashboard: React.FC = () => {
     if (contextSetCurrentStudentId) {
         contextSetCurrentStudentId(studentId);
     }
-    setCurrentView('dashboard'); 
+    setCurrentView('dashboard');
   };
 
   const renderView = () => {
     if (!selectedStudentId && isParent && localLinkedStudents.length > 0) {
       return <p className="text-center text-gray-600">Please select a child to view their information.</p>;
     }
-    if (!selectedStudentId && !isParent && !isStudent) { 
+    if (!selectedStudentId && !isParent && !isStudent) {
         return <p className="text-center text-gray-600">No student information available.</p>;
     }
     if (loadingStudents && !selectedStudentId) {
@@ -123,7 +123,7 @@ const PortalDashboard: React.FC = () => {
             {renderCard("My Schedule", "portal_mySchedule", "schedule")}
             {renderCard("My Attendance", "portal_myAttendance", "attendance")}
             {renderCard("My Grades", "portal_myGrades", "grades")}
-            {renderCard("My Billing", "portal_myBilling", "billing")} 
+            {renderCard("My Billing", "portal_myBilling", "billing")}
           </div>
         );
     }
@@ -151,7 +151,7 @@ const PortalDashboard: React.FC = () => {
       </button>
     </div>
   );
-  
+
   const selectedStudentData = localLinkedStudents.find(s => s.id === selectedStudentId);
   const welcomeName = isStudent ? (profile?.full_name || user?.email) : (selectedStudentData?.name || profile?.full_name || user?.email);
 
@@ -184,9 +184,9 @@ const PortalDashboard: React.FC = () => {
           </div>
         )}
       </div>
-      
+
       {currentView !== 'dashboard' && (
-          <button 
+          <button
             onClick={() => setCurrentView('dashboard')}
             className="mb-6 px-4 py-2 text-sm font-medium text-indigo-600 hover:text-indigo-800 print:hidden"
           >

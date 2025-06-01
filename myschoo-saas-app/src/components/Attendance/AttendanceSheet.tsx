@@ -84,10 +84,10 @@ const AttendanceSheet: React.FC<AttendanceSheetProps> = ({
     setError(null);
 
     const recordsToSave: Omit<AttendanceRecord, 'id' | 'tenant_id' | 'created_at' | 'updated_at'>[] = [];
-    
+
     for (const enrollment of enrolledStudents) {
         const studentEnrollmentId = enrollment.id!; // This is student_enrollments.id
-        const studentId = enrollment.student_id; 
+        const studentId = enrollment.student_id;
         const data = attendanceData[studentEnrollmentId];
         if (data && data.codeId) { // Ensure a code is selected
             recordsToSave.push({

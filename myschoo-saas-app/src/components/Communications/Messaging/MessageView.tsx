@@ -31,7 +31,7 @@ const MessageView: React.FC<MessageViewProps> = ({ threadId, onMessageSent, part
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
-  
+
   useEffect(scrollToBottom, [messages]);
 
 
@@ -54,7 +54,7 @@ const MessageView: React.FC<MessageViewProps> = ({ threadId, onMessageSent, part
 
       if (fetchError) throw fetchError;
       setMessages(data || []);
-      
+
       // Mark messages as read (basic implementation: update last_read_at on participant record)
       if (user?.id && data && data.length > 0) {
         await supabase
@@ -76,7 +76,7 @@ const MessageView: React.FC<MessageViewProps> = ({ threadId, onMessageSent, part
   useEffect(() => {
     fetchMessages();
   }, [fetchMessages]);
-  
+
   // Real-time subscription for new messages (Optional - Basic Implementation)
   useEffect(() => {
     if (!threadId) return;
@@ -97,7 +97,7 @@ const MessageView: React.FC<MessageViewProps> = ({ threadId, onMessageSent, part
               .eq('id', newMessage.sender_id)
               .single();
             if (profileError) console.error("Error fetching sender profile for RT message", profileError);
-            
+
             setMessages(prevMessages => [...prevMessages, { ...newMessage, user_profiles: senderProfile || undefined }]);
           }
         }
@@ -142,7 +142,7 @@ const MessageView: React.FC<MessageViewProps> = ({ threadId, onMessageSent, part
       setSending(false);
     }
   };
-  
+
   const getParticipantNames = (): string => {
     return participants.map(p => p.name).join(', ');
   };
@@ -156,7 +156,7 @@ const MessageView: React.FC<MessageViewProps> = ({ threadId, onMessageSent, part
       </div>
     );
   }
-  
+
   if (loading) {
     return <div className="p-4 text-center text-gray-500">Loading messages...</div>;
   }
@@ -175,8 +175,8 @@ const MessageView: React.FC<MessageViewProps> = ({ threadId, onMessageSent, part
         {messages.map(msg => (
           <div key={msg.id} className={`flex ${msg.sender_id === user?.id ? 'justify-end' : 'justify-start'}`}>
             <div className={`max-w-xs lg:max-w-md px-3 py-2 rounded-lg shadow ${
-                msg.sender_id === user?.id 
-                ? 'bg-indigo-500 text-white' 
+                msg.sender_id === user?.id
+                ? 'bg-indigo-500 text-white'
                 : 'bg-gray-200 text-gray-800'
             }`}>
               <p className="text-xs font-semibold mb-0.5">
@@ -201,8 +201,8 @@ const MessageView: React.FC<MessageViewProps> = ({ threadId, onMessageSent, part
             className="flex-grow p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm resize-none"
             disabled={sending}
           />
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             disabled={sending || !newMessageContent.trim()}
             className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 disabled:opacity-50"
           >

@@ -32,7 +32,7 @@ const MarkingPeriodList: React.FC<MarkingPeriodListProps> = ({
     const parent = allMarkingPeriods.find(mp => mp.id === parentId);
     return parent ? parent.name : 'Unknown Parent';
   };
-  
+
   const formatDate = (dateString: string | undefined | null) => {
     if (!dateString) return 'N/A';
     const date = new Date(dateString + 'T00:00:00');

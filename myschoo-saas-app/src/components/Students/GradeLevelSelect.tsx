@@ -29,7 +29,7 @@ const GradeLevelSelect: React.FC<GradeLevelSelectProps> = ({
         const { data, error: fetchError } = await supabase
           .from('grade_levels')
           .select('id, name')
-          .order('sort_order', { ascending: true }); 
+          .order('sort_order', { ascending: true });
 
         if (fetchError) {
           throw fetchError;

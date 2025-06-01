@@ -94,7 +94,7 @@ const CourseForm: React.FC<CourseFormProps> = ({ courseToEdit, onSave, onCancel 
 
     try {
       let resultCourse: Course;
-      const dataToSave = { 
+      const dataToSave = {
         ...formData,
         default_credits: formData.default_credits === null ? undefined : Number(formData.default_credits)
       };
@@ -172,7 +172,7 @@ const CourseForm: React.FC<CourseFormProps> = ({ courseToEdit, onSave, onCancel 
           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
       </div>
-      
+
       <div>
         <label htmlFor="description" className="flex items-center text-sm font-medium text-gray-700">
           Description
@@ -199,7 +199,7 @@ const CourseForm: React.FC<CourseFormProps> = ({ courseToEdit, onSave, onCancel 
           id="default_credits"
           value={formData.default_credits === null ? '' : formData.default_credits} // Handle null for number input
           onChange={handleChange}
-          step="0.01" 
+          step="0.01"
           min="0"
           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />

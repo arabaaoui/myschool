@@ -30,7 +30,7 @@ const AssignFeeForm: React.FC<AssignFeeFormProps> = ({ onFeeAssigned }) => {
 
   const [students, setStudents] = useState<Student[]>([]);
   const [feeTypes, setFeeTypes] = useState<FeeType[]>([]);
-  
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loadingDropdowns, setLoadingDropdowns] = useState(true);
@@ -102,7 +102,7 @@ const AssignFeeForm: React.FC<AssignFeeFormProps> = ({ onFeeAssigned }) => {
         .single();
 
       if (insertError) throw insertError;
-      
+
       onFeeAssigned(data as StudentFee);
       // Reset form
       setStudentId('');
@@ -119,7 +119,7 @@ const AssignFeeForm: React.FC<AssignFeeFormProps> = ({ onFeeAssigned }) => {
       setLoading(false);
     }
   };
-  
+
   if (loadingDropdowns) {
     return <p className="text-center text-gray-500 py-4">Loading form data...</p>;
   }
@@ -158,7 +158,7 @@ const AssignFeeForm: React.FC<AssignFeeFormProps> = ({ onFeeAssigned }) => {
         </label>
         <input type="number" id="amount_fee" name="amount" value={amount} onChange={(e) => setAmount(e.target.value)} required min="0.01" step="0.01" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
       </div>
-      
+
       <div>
         <label htmlFor="due_date_fee" className="flex items-center text-sm font-medium text-gray-700">
           Due Date (Optional)

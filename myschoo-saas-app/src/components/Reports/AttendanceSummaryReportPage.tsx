@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../../supabaseClient';
-import { Student } from '../Students/StudentForm'; 
-import { CoursePeriod } from '../Courses/CoursePeriods/CoursePeriodForm'; 
+import { Student } from '../Students/StudentForm';
+import { CoursePeriod } from '../Courses/CoursePeriods/CoursePeriodForm';
 import HelpTooltip from '../common/HelpTooltip';
 import { useAuth } from '../../App';
 
@@ -19,12 +19,12 @@ const AttendanceSummaryReportPage: React.FC = () => {
   const { user, isTeacher, isTenantAdmin } = useAuth();
   const [students, setStudents] = useState<Student[]>([]);
   const [coursePeriods, setCoursePeriods] = useState<CoursePeriod[]>([]); // Assuming CoursePeriod has id and name
-  
+
   const [selectedStudentId, setSelectedStudentId] = useState<string>('');
   const [selectedCoursePeriodId, setSelectedCoursePeriodId] = useState<string>('');
   const [startDate, setStartDate] = useState<string>('');
   const [endDate, setEndDate] = useState<string>('');
-  
+
   const [reportData, setReportData] = useState<AttendanceSummaryData[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -104,11 +104,11 @@ const AttendanceSummaryReportPage: React.FC = () => {
       setLoading(false);
     }
   }, [selectedStudentId, selectedCoursePeriodId, startDate, endDate]);
-  
+
   const handlePrint = () => {
     window.print();
   };
-  
+
   if (!isTeacher && !isTenantAdmin) {
     return <p className="p-4 text-red-500">You do not have permission to view reports.</p>;
   }
@@ -179,7 +179,7 @@ const AttendanceSummaryReportPage: React.FC = () => {
 
       {loading && <p className="text-center py-4">Loading report data...</p>}
       {error && <p className="my-4 text-red-600 bg-red-100 p-3 rounded-md text-sm">{error}</p>}
-      
+
       {reportData.length > 0 && (
         <div id="attendanceReportContent" className="bg-white p-6 shadow-lg rounded-lg">
           <div className="flex justify-between items-center mb-6 border-b pb-4">

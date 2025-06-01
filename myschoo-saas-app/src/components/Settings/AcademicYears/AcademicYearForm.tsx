@@ -28,7 +28,7 @@ const AcademicYearForm: React.FC<AcademicYearFormProps> = ({ yearToEdit, onSave,
 
   useEffect(() => {
     if (yearToEdit) {
-      setFormData({ 
+      setFormData({
         ...yearToEdit,
         // Ensure dates are in YYYY-MM-DD format for the input type="date"
         start_date: yearToEdit.start_date ? new Date(yearToEdit.start_date).toISOString().split('T')[0] : '',
@@ -129,7 +129,7 @@ const AcademicYearForm: React.FC<AcademicYearFormProps> = ({ yearToEdit, onSave,
           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
       </div>
-      
+
       <div>
         <label htmlFor="end_date" className="flex items-center text-sm font-medium text-gray-700">
           End Date <span className="text-red-500 ml-1">*</span>

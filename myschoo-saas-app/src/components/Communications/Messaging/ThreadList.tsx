@@ -32,9 +32,9 @@ interface ThreadListProps {
   error?: string | null;
 }
 
-const ThreadList: React.FC<ThreadListProps> = ({ 
-    threads, 
-    onSelectThread, 
+const ThreadList: React.FC<ThreadListProps> = ({
+    threads,
+    onSelectThread,
     selectedThreadId,
     loading,
     error
@@ -47,7 +47,7 @@ const ThreadList: React.FC<ThreadListProps> = ({
       .map(p => p.full_name || p.email || 'Unknown User')
       .join(', ');
   };
-  
+
   const formatDate = (dateString?: string | null) => {
     if (!dateString) return '';
     const date = new Date(dateString);
@@ -78,7 +78,7 @@ const ThreadList: React.FC<ThreadListProps> = ({
           } else if (!displayNames && thread.message_threads?.participants) { // Example if nested
             displayNames = getParticipantNames(thread.message_threads.participants.map((p:any) => p.user_profiles));
           }
-          
+
           // Last message snippet and time
           const lastMessage = thread.messages && thread.messages.length > 0 ? thread.messages[0] : null;
           const snippet = thread.last_message_snippet || lastMessage?.content || 'No messages yet';

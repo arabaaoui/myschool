@@ -11,10 +11,10 @@ interface SelectStudentAndMarkingPeriodForReportCardProps {
 const SelectStudentAndMarkingPeriodForReportCard: React.FC<SelectStudentAndMarkingPeriodForReportCardProps> = ({ onGenerate }) => {
   const [students, setStudents] = useState<Student[]>([]);
   const [markingPeriods, setMarkingPeriods] = useState<MarkingPeriod[]>([]);
-  
+
   const [selectedStudentId, setSelectedStudentId] = useState<string>('');
   const [selectedMarkingPeriodId, setSelectedMarkingPeriodId] = useState<string>('');
-  
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 

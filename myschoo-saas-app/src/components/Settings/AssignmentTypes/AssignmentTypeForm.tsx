@@ -28,7 +28,7 @@ const AssignmentTypeForm: React.FC<AssignmentTypeFormProps> = ({ typeToEdit, onS
 
   useEffect(() => {
     if (typeToEdit) {
-      setFormData({ 
+      setFormData({
         ...typeToEdit,
         weight: typeToEdit.weight === null ? undefined : typeToEdit.weight,
         sort_order: typeToEdit.sort_order === null ? undefined : typeToEdit.sort_order,
@@ -54,10 +54,10 @@ const AssignmentTypeForm: React.FC<AssignmentTypeFormProps> = ({ typeToEdit, onS
         }
       }
     }
-    
-    setFormData((prev) => ({ 
-        ...prev, 
-        [name]: processedValue === undefined ? null : processedValue 
+
+    setFormData((prev) => ({
+        ...prev,
+        [name]: processedValue === undefined ? null : processedValue
     }));
   };
 
@@ -65,7 +65,7 @@ const AssignmentTypeForm: React.FC<AssignmentTypeFormProps> = ({ typeToEdit, onS
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    
+
     if (formData.weight !== null && formData.weight !== undefined && (formData.weight < 0 || formData.weight > 1)) {
         setError('Weight must be between 0.00 and 1.00 (e.g., 0.2 for 20%).');
         setLoading(false);
@@ -77,7 +77,7 @@ const AssignmentTypeForm: React.FC<AssignmentTypeFormProps> = ({ typeToEdit, onS
 
     try {
       let resultType: AssignmentType;
-      const dataToSave = { 
+      const dataToSave = {
         ...formData,
         weight: formData.weight === undefined ? null : Number(formData.weight),
         sort_order: formData.sort_order === undefined ? null : Number(formData.sort_order),
@@ -153,7 +153,7 @@ const AssignmentTypeForm: React.FC<AssignmentTypeFormProps> = ({ typeToEdit, onS
           placeholder="e.g., 0.20 for 20%"
         />
       </div>
-      
+
       <div>
         <label htmlFor="sort_order" className="flex items-center text-sm font-medium text-gray-700">
           Sort Order (Optional)

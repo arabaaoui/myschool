@@ -620,7 +620,7 @@ CREATE POLICY "Tenant users can view their own tenant"
 DROP POLICY IF EXISTS "Allow all access for service_role on tenants" ON public.tenants;
 CREATE POLICY "Allow all access for service_role on tenants"
   ON public.tenants FOR ALL
-  USING (auth.role() = 'service_role'); 
+  USING (auth.role() = 'service_role');
 
 -- --------------
 -- -- User Profiles RLS
@@ -635,20 +635,20 @@ DROP POLICY IF EXISTS "Users can update their own profile" ON public.user_profil
 CREATE POLICY "Users can update their own profile"
   ON public.user_profiles FOR UPDATE
   USING (id = auth.uid())
-  WITH CHECK (id = auth.uid()); 
+  WITH CHECK (id = auth.uid());
 
 DROP POLICY IF EXISTS "Tenant admins can manage profiles in their tenant" ON public.user_profiles;
 CREATE POLICY "Tenant admins can manage profiles in their tenant"
-  ON public.user_profiles FOR ALL 
+  ON public.user_profiles FOR ALL
   USING (
     tenant_id = public.get_current_tenant_id() AND
     public.get_current_user_role() = 'admin'
   )
-  WITH CHECK ( 
+  WITH CHECK (
     tenant_id = public.get_current_tenant_id() AND
     public.get_current_user_role() = 'admin'
   );
-  
+
 DROP POLICY IF EXISTS "Users can view profiles in their own tenant" ON public.user_profiles;
 CREATE POLICY "Users can view profiles in their own tenant"
     ON public.user_profiles FOR SELECT
@@ -698,7 +698,7 @@ DROP POLICY IF EXISTS "Parents can view their linked children's student records"
 CREATE POLICY "Parents can view their linked children's student records"
   ON public.students FOR SELECT
   USING (tenant_id = public.get_current_tenant_id() AND public.is_parent_of_student(id) AND public.get_current_user_role() = 'parent');
-  
+
 DROP POLICY IF EXISTS "Tenant admins can manage students" ON public.students;
 CREATE POLICY "Tenant admins can manage students"
   ON public.students FOR ALL
@@ -759,7 +759,7 @@ DROP POLICY IF EXISTS "Authenticated users can view marking periods in their ten
 CREATE POLICY "Authenticated users can view marking periods in their tenant"
   ON public.marking_periods FOR SELECT
   USING (tenant_id = public.get_current_tenant_id());
-  
+
 DROP POLICY IF EXISTS "Tenant admins can manage marking_periods" ON public.marking_periods;
 CREATE POLICY "Tenant admins can manage marking_periods"
   ON public.marking_periods FOR ALL
@@ -820,15 +820,15 @@ CREATE POLICY "Tenant admins and teachers can manage course_periods"
   ON public.course_periods FOR ALL
   USING (tenant_id = public.get_current_tenant_id() AND (public.get_current_user_role() = 'admin' OR public.get_current_user_role() = 'teacher'))
   WITH CHECK (tenant_id = public.get_current_tenant_id() AND (public.get_current_user_role() = 'admin' OR public.get_current_user_role() = 'teacher'));
-  
+
 DROP POLICY IF EXISTS "Students and Parents can view their relevant course_periods" ON public.course_periods;
 CREATE POLICY "Students and Parents can view their relevant course_periods"
   ON public.course_periods FOR SELECT
   USING (
     tenant_id = public.get_current_tenant_id() AND
     id IN (
-        SELECT se.course_period_id FROM public.student_enrollments se 
-        WHERE 
+        SELECT se.course_period_id FROM public.student_enrollments se
+        WHERE
             se.tenant_id = public.get_current_tenant_id() AND
             (
                 (public.get_current_user_role() = 'student' AND se.student_id = public.get_student_id_for_user()) OR
@@ -862,7 +862,7 @@ CREATE POLICY "Students and Parents can view their relevant student_enrollments"
         (public.get_current_user_role() = 'parent' AND public.is_parent_of_student(student_id))
     )
   );
-  
+
 DROP POLICY IF EXISTS "Allow all access for service_role on student_enrollments" ON public.student_enrollments;
 CREATE POLICY "Allow all access for service_role on student_enrollments"
   ON public.student_enrollments FOR ALL
@@ -913,10 +913,10 @@ CREATE POLICY "Tenant admins can manage attendance records"
 
 DROP POLICY IF EXISTS "Teachers can manage attendance for their course periods" ON public.attendance_records;
 CREATE POLICY "Teachers can manage attendance for their course periods"
-  ON public.attendance_records FOR ALL 
+  ON public.attendance_records FOR ALL
   USING (
     tenant_id = public.get_current_tenant_id() AND
-    auth.uid() = taken_by_user_id AND 
+    auth.uid() = taken_by_user_id AND
     course_period_id IN (SELECT cp.id FROM public.course_periods cp WHERE cp.tenant_id = public.get_current_tenant_id() AND cp.teacher_id = auth.uid())
   )
   WITH CHECK (
@@ -924,7 +924,7 @@ CREATE POLICY "Teachers can manage attendance for their course periods"
     auth.uid() = taken_by_user_id AND
     course_period_id IN (SELECT cp.id FROM public.course_periods cp WHERE cp.tenant_id = public.get_current_tenant_id() AND cp.teacher_id = auth.uid())
   );
-  
+
 DROP POLICY IF EXISTS "Teachers, Students, and Parents can view relevant attendance records (SELECT)" ON public.attendance_records;
 CREATE POLICY "Teachers, Students, and Parents can view relevant attendance records (SELECT)"
   ON public.attendance_records FOR SELECT
@@ -967,7 +967,7 @@ DROP POLICY IF EXISTS "Allow all access for service_role on assignment_types" ON
 CREATE POLICY "Allow all access for service_role on assignment_types"
   ON public.assignment_types FOR ALL
   USING (auth.role() = 'service_role');
-  
+
 -- --------------
 -- -- Assignments RLS
 -- --------------
@@ -1004,7 +1004,7 @@ CREATE POLICY "Students and Parents can view assignments for relevant course per
         tenant_id = public.get_current_tenant_id() AND
         course_period_id IN (
             SELECT se.course_period_id FROM public.student_enrollments se
-            WHERE 
+            WHERE
                 se.tenant_id = public.get_current_tenant_id() AND
                 (
                     (public.get_current_user_role() = 'student' AND se.student_id = public.get_student_id_for_user()) OR
@@ -1086,7 +1086,7 @@ CREATE POLICY "Authenticated staff can view discipline incident types"
     tenant_id = public.get_current_tenant_id() AND
     (public.get_current_user_role() = 'admin' OR public.get_current_user_role() = 'teacher' OR public.get_current_user_role() = 'support_staff')
   );
-  
+
 DROP POLICY IF EXISTS "Allow all access for service_role on discipline_incident_types" ON public.discipline_incident_types;
 CREATE POLICY "Allow all access for service_role on discipline_incident_types"
   ON public.discipline_incident_types FOR ALL
@@ -1124,16 +1124,16 @@ CREATE POLICY "Staff can view discipline incidents they reported or are for stud
   USING (
     tenant_id = public.get_current_tenant_id() AND
     (
-        (public.get_current_user_role() = 'admin' OR public.get_current_user_role() = 'teacher' OR public.get_current_user_role() = 'support_staff') AND 
+        (public.get_current_user_role() = 'admin' OR public.get_current_user_role() = 'teacher' OR public.get_current_user_role() = 'support_staff') AND
         (
             reported_by_user_id = auth.uid() OR
             -- More complex: student_id IN (SELECT student_id FROM student_enrollments WHERE course_period_id IN (SELECT id FROM course_periods WHERE teacher_id = auth.uid()))
             -- For simplicity now, teachers mainly see what they reported. Admins see all via their own policy.
-            (public.get_current_user_role() = 'teacher' AND reported_by_user_id = auth.uid()) 
+            (public.get_current_user_role() = 'teacher' AND reported_by_user_id = auth.uid())
         )
     )
   );
-  
+
 -- (Future: Students/Parents policies for read-only access to their own/child's resolved incidents)
 
 DROP POLICY IF EXISTS "Allow all access for service_role on discipline_incidents" ON public.discipline_incidents;
@@ -1197,7 +1197,7 @@ CREATE POLICY "Parents/Students can view their own/child's payments"
       (public.get_current_user_role() = 'parent' AND public.is_parent_of_student(student_id))
     )
   );
-  
+
 -- --------------
 -- -- Student Account Balances View RLS
 -- -- Note: Views don't have direct RLS policies like tables. Access is controlled by RLS on underlying tables

@@ -21,11 +21,11 @@ interface AssignmentFormProps {
   onCancel: () => void;
 }
 
-const AssignmentForm: React.FC<AssignmentFormProps> = ({ 
-    assignmentToEdit, 
-    coursePeriodId, 
-    onSave, 
-    onCancel 
+const AssignmentForm: React.FC<AssignmentFormProps> = ({
+    assignmentToEdit,
+    coursePeriodId,
+    onSave,
+    onCancel
 }) => {
   const [formData, setFormData] = useState<Omit<Assignment, 'id' | 'tenant_id'>>({ // Omit ID and tenant_id for form state
     course_period_id: coursePeriodId,
@@ -104,7 +104,7 @@ const AssignmentForm: React.FC<AssignmentFormProps> = ({
 
     try {
       let resultAssignment: Assignment;
-      const dataToSave = { 
+      const dataToSave = {
         ...formData,
         max_points: Number(formData.max_points), // Ensure it's a number
         due_date: formData.due_date ? formData.due_date : null, // Ensure null if empty
@@ -121,7 +121,7 @@ const AssignmentForm: React.FC<AssignmentFormProps> = ({
         resultAssignment = data as Assignment;
       } else {
         // For insert, Supabase handles tenant_id if RLS is set up with default or get_current_tenant_id()
-        const { id, tenant_id, ...insertData } = dataToSave; 
+        const { id, tenant_id, ...insertData } = dataToSave;
         const { data, error: insertError } = await supabase
           .from('assignments')
           .insert(insertData) // course_period_id is already in formData
@@ -183,7 +183,7 @@ const AssignmentForm: React.FC<AssignmentFormProps> = ({
             </select>
         )}
       </div>
-      
+
       <div>
         <label htmlFor="description" className="flex items-center text-sm font-medium text-gray-700">
           Description

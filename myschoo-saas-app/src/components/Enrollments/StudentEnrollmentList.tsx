@@ -46,7 +46,7 @@ const StudentEnrollmentList: React.FC<StudentEnrollmentListProps> = ({
       setWithdrawalDateMap(prev => ({ ...prev, [enrollmentId]: new Date().toISOString().split('T')[0] }));
     }
   };
-  
+
   const handleConfirmWithdraw = async (enrollmentId: string) => {
     const date = withdrawalDateMap[enrollmentId];
     if (!date) {
@@ -73,7 +73,7 @@ const StudentEnrollmentList: React.FC<StudentEnrollmentListProps> = ({
   if (error) {
     return <p className="text-center text-red-500 py-4 bg-red-100 rounded text-sm md:text-base">{error}</p>;
   }
-  
+
   return (
     <div className="bg-white shadow-md rounded-lg mt-6">
       <h3 className="text-lg sm:text-xl font-semibold text-gray-700 p-4 border-b border-gray-200">{listTitle}</h3>
@@ -124,7 +124,7 @@ const StudentEnrollmentList: React.FC<StudentEnrollmentListProps> = ({
                     )}
                     {showWithdrawInputMap[enrollment.id!] && (
                       <div className="space-y-1">
-                        <input 
+                        <input
                           type="date"
                           value={withdrawalDateMap[enrollment.id!] || ''}
                           onChange={(e) => handleWithdrawDateChange(enrollment.id!, e.target.value)}

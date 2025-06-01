@@ -37,7 +37,7 @@ const MarkingPeriodForm: React.FC<MarkingPeriodFormProps> = ({ periodToEdit, onS
 
   const [academicYears, setAcademicYears] = useState<AcademicYear[]>([]);
   const [parentPeriodOptions, setParentPeriodOptions] = useState<MarkingPeriod[]>([]);
-  
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loadingDropdowns, setLoadingDropdowns] = useState(true);
@@ -81,7 +81,7 @@ const MarkingPeriodForm: React.FC<MarkingPeriodFormProps> = ({ periodToEdit, onS
 
   useEffect(() => {
     if (periodToEdit) {
-      setFormData({ 
+      setFormData({
         ...periodToEdit,
         start_date: periodToEdit.start_date ? new Date(periodToEdit.start_date).toISOString().split('T')[0] : '',
         end_date: periodToEdit.end_date ? new Date(periodToEdit.end_date).toISOString().split('T')[0] : '',
@@ -121,7 +121,7 @@ const MarkingPeriodForm: React.FC<MarkingPeriodFormProps> = ({ periodToEdit, onS
     if (new Date(formData.start_date) >= new Date(formData.end_date)) {
       setError('End date must be after the start date.'); setLoading(false); return;
     }
-    
+
     const selectedAcademicYear = academicYears.find(ay => ay.id === formData.academic_year_id);
     if (selectedAcademicYear) {
         if (new Date(formData.start_date) < new Date(selectedAcademicYear.start_date) ||
@@ -135,7 +135,7 @@ const MarkingPeriodForm: React.FC<MarkingPeriodFormProps> = ({ periodToEdit, onS
 
     try {
       let resultPeriod: MarkingPeriod;
-      const dataToSave = { 
+      const dataToSave = {
         ...formData,
         sort_order: formData.sort_order === null ? undefined : Number(formData.sort_order),
         parent_marking_period_id: formData.parent_marking_period_id === '' ? null : formData.parent_marking_period_id,
@@ -168,7 +168,7 @@ const MarkingPeriodForm: React.FC<MarkingPeriodFormProps> = ({ periodToEdit, onS
       setLoading(false);
     }
   };
-  
+
   if (loadingDropdowns) {
     return <p className="text-center text-gray-500 py-4">Loading form data...</p>;
   }
@@ -218,7 +218,7 @@ const MarkingPeriodForm: React.FC<MarkingPeriodFormProps> = ({ periodToEdit, onS
           placeholder="e.g., Semester 1, Q1"
         />
       </div>
-      
+
       {/* Short Name */}
       <div>
         <label htmlFor="short_name" className="flex items-center text-sm font-medium text-gray-700">
@@ -252,7 +252,7 @@ const MarkingPeriodForm: React.FC<MarkingPeriodFormProps> = ({ periodToEdit, onS
           placeholder="e.g., Semester, Quarter, Trimester"
         />
       </div>
-      
+
       {/* Start Date & End Date (side-by-side on larger screens) */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 sm:gap-y-6">
         <div>

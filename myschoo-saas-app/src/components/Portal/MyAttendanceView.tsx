@@ -40,7 +40,7 @@ const MyAttendanceView: React.FC<MyAttendanceViewProps> = ({ studentId }) => {
 
       if (startDate) query = query.gte('attendance_date', startDate);
       if (endDate) query = query.lte('attendance_date', endDate);
-      
+
       query = query.order('attendance_date', { ascending: false });
 
       const { data, error: fetchError } = await query;
@@ -61,7 +61,7 @@ const MyAttendanceView: React.FC<MyAttendanceViewProps> = ({ studentId }) => {
   useEffect(() => {
     fetchAttendance();
   }, [fetchAttendance]);
-  
+
   const handleFilterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     fetchAttendance();
@@ -76,7 +76,7 @@ const MyAttendanceView: React.FC<MyAttendanceViewProps> = ({ studentId }) => {
           <HelpTooltip helpKey="portal_myAttendance" position="right" className="ml-2" />
         </h2>
       </div>
-      
+
       <form onSubmit={handleFilterSubmit} className="mb-6 p-4 bg-gray-50 rounded-lg shadow print:hidden">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
           <div>
@@ -95,7 +95,7 @@ const MyAttendanceView: React.FC<MyAttendanceViewProps> = ({ studentId }) => {
 
       {loading && <p className="text-center text-gray-500 py-4">Loading attendance records...</p>}
       {error && <p className="text-center text-red-500 py-4 bg-red-100 p-3 rounded-md">{error}</p>}
-      
+
       {!loading && !error && attendanceRecords.length === 0 && (
          <p className="text-center text-gray-500 py-6">
             <HelpTooltip helpKey="portal_attendance_noRecords" position="bottom" /> No attendance records found for the selected period.

@@ -21,7 +21,7 @@ describe('formatDateToLong', () => {
   it('should return "N/A" for an invalid date string', () => {
     expect(formatDateToLong('invalid-date')).toBe('N/A');
   });
-  
+
   it('should handle different valid date formats if Date constructor can parse them', () => {
     // This depends on Date constructor's leniency, which can vary.
     // Explicit YYYY-MM-DD is preferred for the function's input.
@@ -47,7 +47,7 @@ describe('formatTimestampToLongDateTime', () => {
     // Time part is harder to test without knowing the exact local timezone of the test runner.
     // e.g., for US Eastern Time (ET), 10:30 UTC is 6:30 AM EDT or 5:30 AM EST.
     // For now, checking for AM/PM is a basic indicator.
-    expect(formatted).toMatch(/AM|PM/); 
+    expect(formatted).toMatch(/AM|PM/);
   });
 
   it('should return "N/A" for undefined or null input', () => {

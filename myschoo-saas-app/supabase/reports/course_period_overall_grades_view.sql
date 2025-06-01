@@ -66,7 +66,7 @@ JOIN
     public.student_enrollments se ON s.id = se.student_id
 JOIN
     public.course_periods cp ON se.course_period_id = cp.id
-JOIN 
+JOIN
     public.courses c ON cp.course_id = c.id -- Join to get course_name
 JOIN
     public.marking_periods mp ON cp.marking_period_id = mp.id -- Join to get marking_period_name and id

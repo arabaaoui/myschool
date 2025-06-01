@@ -3,7 +3,7 @@ import { supabase } from '../../../../supabaseClient';
 import AnnouncementList, { DisplayableAnnouncement } from './AnnouncementList';
 import AnnouncementForm, { Announcement } from './AnnouncementForm';
 import HelpTooltip from '../../../common/HelpTooltip';
-import { useAuth } from '../../../../App'; 
+import { useAuth } from '../../../../App';
 
 const ManageAnnouncementsPage: React.FC = () => {
   const { isTenantAdmin } = useAuth();
@@ -89,8 +89,8 @@ const ManageAnnouncementsPage: React.FC = () => {
     setShowForm(false);
     setAnnouncementToEdit(null);
   };
-  
-  if (!isTenantAdmin && !loading) { 
+
+  if (!isTenantAdmin && !loading) {
     return (
         <div className="p-4 md:p-6">
             <p className="text-red-500">{error || "You do not have permission to manage announcements."}</p>

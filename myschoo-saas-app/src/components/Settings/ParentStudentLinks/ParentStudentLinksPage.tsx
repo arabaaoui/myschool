@@ -10,7 +10,7 @@ const ParentStudentLinksPage: React.FC = () => {
   const [links, setLinks] = useState<DisplayableParentStudentLink[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
+
   // No separate form visibility state, form is always above the list
 
   const fetchLinks = useCallback(async () => {
@@ -32,7 +32,7 @@ const ParentStudentLinksPage: React.FC = () => {
         .order('created_at', { ascending: false });
 
       if (fetchError) throw fetchError;
-      
+
       // Map data to DisplayableParentStudentLink if needed, though select does most of it
       const displayableLinks = (data || []).map(link => ({
         ...link,
@@ -62,7 +62,7 @@ const ParentStudentLinksPage: React.FC = () => {
 
   const handleLinkCreated = (newLink: ParentStudentLink) => {
     // Refetch to get the newly created link with all details
-    fetchLinks(); 
+    fetchLinks();
   };
 
   const handleRemoveLink = async (linkId: string) => {
@@ -84,7 +84,7 @@ const ParentStudentLinksPage: React.FC = () => {
       setError('Failed to remove link. ' + err.message);
     }
   };
-  
+
   if (!isTenantAdmin && !loading) { // Check after initial loading attempt
       return (
           <div className="p-4 md:p-6">
@@ -105,7 +105,7 @@ const ParentStudentLinksPage: React.FC = () => {
       {error && <p className="mb-4 text-red-600 bg-red-100 p-3 rounded-md text-sm md:text-base">{error}</p>}
 
       <LinkParentStudentForm onLinkCreated={handleLinkCreated} existingLinks={links} />
-      
+
       <ParentStudentLinksList
         links={links}
         onRemoveLink={handleRemoveLink}

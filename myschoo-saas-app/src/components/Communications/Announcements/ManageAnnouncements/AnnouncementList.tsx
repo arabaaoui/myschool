@@ -26,7 +26,7 @@ const AnnouncementList: React.FC<AnnouncementListProps> = ({
 }) => {
   const formatDate = (dateString?: string | null) => {
     if (!dateString) return 'N/A';
-    return new Date(dateString).toLocaleString(undefined, { 
+    return new Date(dateString).toLocaleString(undefined, {
         year: 'numeric', month: 'short', day: 'numeric',
         hour: '2-digit', minute: '2-digit'
     });

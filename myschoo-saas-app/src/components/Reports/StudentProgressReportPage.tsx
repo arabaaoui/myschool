@@ -21,10 +21,10 @@ const StudentProgressReportPage: React.FC = () => {
   const { user, isTeacher, isTenantAdmin } = useAuth();
   const [students, setStudents] = useState<Student[]>([]);
   const [markingPeriods, setMarkingPeriods] = useState<MarkingPeriod[]>([]);
-  
+
   const [selectedStudentId, setSelectedStudentId] = useState<string>('');
   const [selectedMarkingPeriodId, setSelectedMarkingPeriodId] = useState<string>(''); // Optional
-  
+
   const [reportData, setReportData] = useState<StudentProgressData[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -93,7 +93,7 @@ const StudentProgressReportPage: React.FC = () => {
       setLoading(false);
     }
   }, [selectedStudentId, selectedMarkingPeriodId, students]);
-  
+
   const handlePrint = () => {
     window.print();
   };
@@ -101,7 +101,7 @@ const StudentProgressReportPage: React.FC = () => {
   if (!isTeacher && !isTenantAdmin) {
     return <p className="p-4 text-red-500">You do not have permission to view reports.</p>;
   }
-  
+
   // Group data by course_period_name for rendering
   const groupedReportData = reportData.reduce((acc, item) => {
     const courseKey = item.course_period_name;
@@ -170,7 +170,7 @@ const StudentProgressReportPage: React.FC = () => {
 
       {loading && <p className="text-center py-4">Loading report data...</p>}
       {error && <p className="my-4 text-red-600 bg-red-100 p-3 rounded-md text-sm">{error}</p>}
-      
+
       {reportData.length > 0 && (
         <div id="progressReportContent" className="bg-white p-6 shadow-lg rounded-lg">
           <div className="flex justify-between items-center mb-6 border-b pb-4">
@@ -205,7 +205,7 @@ const StudentProgressReportPage: React.FC = () => {
                         <td className="px-4 py-2 text-right whitespace-nowrap text-sm text-gray-500">{Number(item.assignment_max_points).toFixed(2)}</td>
                         <td className="px-4 py-2 text-right whitespace-nowrap text-sm font-semibold text-gray-700">{item.points_earned !== null && item.points_earned !== undefined ? Number(item.points_earned).toFixed(2) : '-'}</td>
                         <td className="px-4 py-2 text-right whitespace-nowrap text-sm text-gray-500">
-                            {item.points_earned !== null && item.points_earned !== undefined && item.assignment_max_points > 0 ? 
+                            {item.points_earned !== null && item.points_earned !== undefined && item.assignment_max_points > 0 ?
                              ((Number(item.points_earned) / Number(item.assignment_max_points)) * 100).toFixed(1) + '%' : '-'}
                         </td>
                       </tr>

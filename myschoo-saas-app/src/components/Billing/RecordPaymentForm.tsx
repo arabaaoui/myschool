@@ -29,7 +29,7 @@ const RecordPaymentForm: React.FC<RecordPaymentFormProps> = ({ onPaymentRecorded
   const [notes, setNotes] = useState<string>('');
 
   const [students, setStudents] = useState<Student[]>([]);
-  
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loadingStudents, setLoadingStudents] = useState(true);
@@ -81,7 +81,7 @@ const RecordPaymentForm: React.FC<RecordPaymentFormProps> = ({ onPaymentRecorded
         .single();
 
       if (insertError) throw insertError;
-      
+
       onPaymentRecorded(data as StudentPayment);
       // Reset form
       setStudentId('');
@@ -98,7 +98,7 @@ const RecordPaymentForm: React.FC<RecordPaymentFormProps> = ({ onPaymentRecorded
       setLoading(false);
     }
   };
-  
+
   if (loadingStudents) {
     return <p className="text-center text-gray-500 py-4">Loading student data...</p>;
   }
@@ -126,7 +126,7 @@ const RecordPaymentForm: React.FC<RecordPaymentFormProps> = ({ onPaymentRecorded
         </label>
         <input type="number" id="amount_paid" name="amount_paid" value={amountPaid} onChange={(e) => setAmountPaid(e.target.value)} required min="0.01" step="0.01" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
       </div>
-      
+
       <div>
         <label htmlFor="payment_date" className="flex items-center text-sm font-medium text-gray-700">
           Payment Date & Time <span className="text-red-500 ml-1">*</span>
@@ -134,7 +134,7 @@ const RecordPaymentForm: React.FC<RecordPaymentFormProps> = ({ onPaymentRecorded
         </label>
         <input type="datetime-local" id="payment_date" name="payment_date" value={paymentDate} onChange={(e) => setPaymentDate(e.target.value)} required className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
       </div>
-      
+
       <div>
         <label htmlFor="payment_method" className="flex items-center text-sm font-medium text-gray-700">
           Payment Method (Optional)

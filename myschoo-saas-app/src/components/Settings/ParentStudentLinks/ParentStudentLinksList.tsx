@@ -11,7 +11,7 @@ export interface DisplayableParentStudentLink extends ParentStudentLink {
   student_name?: string;
   student_identifier?: string;
   // For direct joins if preferred in query:
-  parents?: Pick<UserProfile, 'full_name' | 'email'>; 
+  parents?: Pick<UserProfile, 'full_name' | 'email'>;
   students?: Pick<Student, 'first_name' | 'last_name' | 'student_identifier'>;
 }
 

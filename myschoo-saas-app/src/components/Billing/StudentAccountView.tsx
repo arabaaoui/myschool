@@ -23,11 +23,11 @@ interface DisplayableStudentFee extends StudentFee {
 const StudentAccountView: React.FC = () => {
   const [students, setStudents] = useState<Student[]>([]);
   const [selectedStudentId, setSelectedStudentId] = useState<string>('');
-  
+
   const [assignedFees, setAssignedFees] = useState<DisplayableStudentFee[]>([]);
   const [payments, setPayments] = useState<StudentPayment[]>([]);
   const [accountBalance, setAccountBalance] = useState<StudentAccountBalance | null>(null);
-  
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -107,8 +107,8 @@ const StudentAccountView: React.FC = () => {
         const newPaidStatus = !currentIsPaid;
         const { data, error: updateError } = await supabase
             .from('student_fees')
-            .update({ 
-                is_paid: newPaidStatus, 
+            .update({
+                is_paid: newPaidStatus,
                 paid_date: newPaidStatus ? new Date().toISOString().split('T')[0] : null,
                 updated_at: new Date().toISOString()
             })
@@ -117,9 +117,9 @@ const StudentAccountView: React.FC = () => {
             .single();
 
         if (updateError) throw updateError;
-        
+
         // Refresh data after update
-        fetchStudentAccountData(); 
+        fetchStudentAccountData();
         alert(`Fee status updated successfully.`);
 
     } catch (err: any) {
@@ -129,7 +129,7 @@ const StudentAccountView: React.FC = () => {
         setLoading(false);
     }
   };
-  
+
   const formatDate = (dateString?: string | null) => {
     if (!dateString) return 'N/A';
     return new Date(dateString.includes('T') ? dateString : dateString + 'T00:00:00').toLocaleDateString();
@@ -141,15 +141,15 @@ const StudentAccountView: React.FC = () => {
         Student Account View
         <HelpTooltip helpKey="studentAccountView_intro" position="right" className="ml-2"/>
       </h3>
-      
+
       <div>
         <label htmlFor="student_select_account" className="flex items-center text-sm font-medium text-gray-700">
           Select Student <span className="text-red-500 ml-1">*</span>
           <HelpTooltip helpKey="studentAccountView_selectStudent" />
         </label>
-        <select 
-          id="student_select_account" 
-          value={selectedStudentId} 
+        <select
+          id="student_select_account"
+          value={selectedStudentId}
           onChange={(e) => setSelectedStudentId(e.target.value)}
           className="mt-1 block w-full md:w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         >
@@ -208,7 +208,7 @@ const StudentAccountView: React.FC = () => {
                           </span>
                         </td>
                         <td className="px-3 py-2 whitespace-nowrap text-sm">
-                          <button 
+                          <button
                             onClick={() => handleToggleFeePaidStatus(fee.id!, fee.is_paid || false)}
                             className={`text-xs px-2 py-1 rounded ${fee.is_paid ? 'bg-yellow-500 hover:bg-yellow-600 text-white' : 'bg-green-500 hover:bg-green-600 text-white'}`}
                             title={fee.is_paid ? 'Mark as Unpaid' : 'Mark as Paid'}

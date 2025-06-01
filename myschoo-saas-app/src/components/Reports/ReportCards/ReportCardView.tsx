@@ -30,9 +30,9 @@ interface ReportCardViewProps {
   gradeLevelName?: string; // For the header
 }
 
-const ReportCardView: React.FC<ReportCardViewProps> = ({ 
-    data, 
-    studentName, 
+const ReportCardView: React.FC<ReportCardViewProps> = ({
+    data,
+    studentName,
     markingPeriodName,
     academicYearName,
     gradeLevelName
@@ -41,7 +41,7 @@ const ReportCardView: React.FC<ReportCardViewProps> = ({
   if (data.length === 0) {
     return <p className="text-center text-gray-500 py-6">No data available to generate the report card for the selected criteria.</p>;
   }
-  
+
   // Use details from the first record for overall report card headers, if not passed as props
   const reportStudentName = studentName || data[0]?.student_name;
   const reportMarkingPeriod = markingPeriodName || data[0]?.marking_period_name;
@@ -60,7 +60,7 @@ const ReportCardView: React.FC<ReportCardViewProps> = ({
       <div className="text-center mb-8 border-b pb-4">
         <h1 className="text-3xl font-bold text-gray-800">Report Card</h1>
         {/* Assuming school name could come from tenant info or be hardcoded for now */}
-        <p className="text-lg text-gray-600">MySchoo Educational Institution</p> 
+        <p className="text-lg text-gray-600">MySchoo Educational Institution</p>
       </div>
 
       {/* Student and Period Info */}
@@ -95,8 +95,8 @@ const ReportCardView: React.FC<ReportCardViewProps> = ({
                 </td>
                 <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600">{item.teacher_name || 'N/A'}</td>
                 <td className="px-3 py-2 text-center whitespace-nowrap text-sm text-gray-600">
-                  {item.course_overall_percentage !== null && item.course_overall_percentage !== undefined 
-                    ? `${item.course_overall_percentage.toFixed(1)}%` 
+                  {item.course_overall_percentage !== null && item.course_overall_percentage !== undefined
+                    ? `${item.course_overall_percentage.toFixed(1)}%`
                     : 'N/A'}
                 </td>
                 {/* <td className="px-3 py-2 text-center whitespace-nowrap text-sm text-gray-600">{item.course_letter_grade || 'N/A'}</td> */}
@@ -113,7 +113,7 @@ const ReportCardView: React.FC<ReportCardViewProps> = ({
       <div className="mt-8 pt-4 border-t">
         <h4 className="text-md font-semibold text-gray-700 mb-2">General Notes:</h4>
         <p className="text-sm text-gray-600 italic">
-          This report card reflects the student's performance for the specified marking period. 
+          This report card reflects the student's performance for the specified marking period.
           For detailed assignment grades, please refer to the Parent/Student Portal.
         </p>
       </div>

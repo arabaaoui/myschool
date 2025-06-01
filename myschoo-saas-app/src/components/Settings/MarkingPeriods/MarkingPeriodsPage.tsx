@@ -73,7 +73,7 @@ const MarkingPeriodsPage: React.FC = () => {
 
       if (deleteError) throw deleteError;
       // Refetch data to ensure list and parent options are consistent
-      fetchPageData(); 
+      fetchPageData();
     } catch (err: any) {
       console.error('Error deleting marking period:', err);
       setError('Failed to delete marking period. It might be in use. ' + err.message);
@@ -82,7 +82,7 @@ const MarkingPeriodsPage: React.FC = () => {
 
   const handleFormSave = (savedPeriod: MarkingPeriod) => {
     // Refetch data to ensure list and parent options are consistent, and sorting is correct
-    fetchPageData(); 
+    fetchPageData();
     setShowForm(false);
     setPeriodToEdit(null);
   };

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../../supabaseClient';
-import { useAuth } from '../../../App'; 
+import { useAuth } from '../../../App';
 import HelpTooltip from '../../common/HelpTooltip';
 
 interface CoursePeriodForDisplay {
   id: string;
-  name: string; 
-  courses?: { name?: string }; 
-  marking_periods?: { name?: string }; 
+  name: string;
+  courses?: { name?: string };
+  marking_periods?: { name?: string };
 }
 
 interface SelectCoursePeriodForGradebookProps {
@@ -15,9 +15,9 @@ interface SelectCoursePeriodForGradebookProps {
   currentSelection?: string | null;
 }
 
-const SelectCoursePeriodForGradebook: React.FC<SelectCoursePeriodForGradebookProps> = ({ 
-    onCoursePeriodSelect, 
-    currentSelection 
+const SelectCoursePeriodForGradebook: React.FC<SelectCoursePeriodForGradebookProps> = ({
+    onCoursePeriodSelect,
+    currentSelection
 }) => {
   const { user } = useAuth();
   const [coursePeriods, setCoursePeriods] = useState<CoursePeriodForDisplay[]>([]);
@@ -41,9 +41,9 @@ const SelectCoursePeriodForGradebook: React.FC<SelectCoursePeriodForGradebookPro
             id,
             name,
             courses (name),
-            marking_periods (name) 
+            marking_periods (name)
           `)
-          .eq('teacher_id', user.id) 
+          .eq('teacher_id', user.id)
           .order('name', { ascending: true });
 
         if (fetchError) throw fetchError;
@@ -71,7 +71,7 @@ const SelectCoursePeriodForGradebook: React.FC<SelectCoursePeriodForGradebookPro
         onCoursePeriodSelect(newSelection);
     }
   };
-  
+
   if (loading) {
     return <p className="text-sm text-gray-500 py-2">Loading your classes...</p>;
   }

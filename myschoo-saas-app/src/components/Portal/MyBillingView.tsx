@@ -27,7 +27,7 @@ const MyBillingView: React.FC<MyBillingViewProps> = ({ studentId }) => {
   const [assignedFees, setAssignedFees] = useState<DisplayableStudentFeePortal[]>([]);
   const [payments, setPayments] = useState<StudentPayment[]>([]);
   const [accountBalance, setAccountBalance] = useState<StudentAccountBalancePortal | null>(null);
-  
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -78,7 +78,7 @@ const MyBillingView: React.FC<MyBillingViewProps> = ({ studentId }) => {
   useEffect(() => {
     fetchBillingData();
   }, [fetchBillingData]);
-  
+
   const formatDate = (dateString?: string | null) => {
     if (!dateString) return 'N/A';
     return new Date(dateString.includes('T') ? dateString : dateString + 'T00:00:00').toLocaleDateString();

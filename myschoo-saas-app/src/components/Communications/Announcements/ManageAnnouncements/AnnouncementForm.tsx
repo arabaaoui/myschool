@@ -34,9 +34,9 @@ const AnnouncementForm: React.FC<AnnouncementFormProps> = ({ announcementToEdit,
     is_published: true,
     ...announcementToEdit,
     // Ensure target_roles is always an array for the form state
-    target_roles: announcementToEdit?.target_roles || [], 
+    target_roles: announcementToEdit?.target_roles || [],
   });
-  
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -70,8 +70,8 @@ const AnnouncementForm: React.FC<AnnouncementFormProps> = ({ announcementToEdit,
         const roleValue = value;
         setFormData(prev => ({
             ...prev,
-            target_roles: checked 
-                ? [...(prev.target_roles || []), roleValue] 
+            target_roles: checked
+                ? [...(prev.target_roles || []), roleValue]
                 : (prev.target_roles || []).filter(r => r !== roleValue)
         }));
     } else {
@@ -96,7 +96,7 @@ const AnnouncementForm: React.FC<AnnouncementFormProps> = ({ announcementToEdit,
 
     try {
       let resultAnnouncement: Announcement;
-      const dataToSave = { 
+      const dataToSave = {
         ...formData,
         created_by_user_id: formData.created_by_user_id || user?.id,
         start_date: new Date(formData.start_date).toISOString(),
@@ -174,7 +174,7 @@ const AnnouncementForm: React.FC<AnnouncementFormProps> = ({ announcementToEdit,
           <input type="datetime-local" name="end_date" id="end_date" value={formData.end_date || ''} onChange={handleChange} className="mt-1 block w-full input-class" />
         </div>
       </div>
-      
+
       <div>
         <label className="flex items-center text-sm font-medium text-gray-700 mb-1">
             Target Roles (Optional - leave blank for all)
@@ -183,10 +183,10 @@ const AnnouncementForm: React.FC<AnnouncementFormProps> = ({ announcementToEdit,
         <div className="mt-2 space-y-2 sm:space-y-0 sm:flex sm:flex-wrap sm:gap-x-6 sm:gap-y-2">
             {AVAILABLE_TARGET_ROLES.map(role => (
                 <div key={role} className="flex items-center">
-                    <input 
-                        id={`role-${role}`} 
-                        name="target_roles" 
-                        type="checkbox" 
+                    <input
+                        id={`role-${role}`}
+                        name="target_roles"
+                        type="checkbox"
                         value={role}
                         checked={(formData.target_roles || []).includes(role)}
                         onChange={handleChange}
@@ -224,21 +224,21 @@ const AnnouncementForm: React.FC<AnnouncementFormProps> = ({ announcementToEdit,
         }
         .btn-primary {
           /* Primary button styling */
-          display: inline-flex; justify-content: center; align-items: center; 
-          padding-left: 1rem; padding-right: 1rem; padding-top: 0.5rem; padding-bottom: 0.5rem; 
-          border-width: 1px; border-color: transparent; 
-          border-radius: 0.375rem; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); 
-          font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; 
+          display: inline-flex; justify-content: center; align-items: center;
+          padding-left: 1rem; padding-right: 1rem; padding-top: 0.5rem; padding-bottom: 0.5rem;
+          border-width: 1px; border-color: transparent;
+          border-radius: 0.375rem; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+          font-size: 0.875rem; line-height: 1.25rem; font-weight: 500;
           color: white; background-color: #4f46e5; /* indigo-600 */
         }
         .btn-primary:hover { background-color: #4338ca; /* indigo-700 */ }
         .btn-secondary {
           /* Secondary button styling */
-          display: inline-flex; justify-content: center; align-items: center; 
-          padding-left: 1rem; padding-right: 1rem; padding-top: 0.5rem; padding-bottom: 0.5rem; 
+          display: inline-flex; justify-content: center; align-items: center;
+          padding-left: 1rem; padding-right: 1rem; padding-top: 0.5rem; padding-bottom: 0.5rem;
           border-width: 1px; border-color: #D1D5DB; /* gray-300 */
-          border-radius: 0.375rem; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); 
-          font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; 
+          border-radius: 0.375rem; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+          font-size: 0.875rem; line-height: 1.25rem; font-weight: 500;
           color: #374151; /* gray-700 */ background-color: white;
         }
         .btn-secondary:hover { background-color: #F9FAFB; /* gray-50 */ }

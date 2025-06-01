@@ -3,7 +3,7 @@ import { supabase } from '../../../supabaseClient';
 import FeeTypeList from './FeeTypeList';
 import FeeTypeForm, { FeeType } from './FeeTypeForm';
 import HelpTooltip from '../../common/HelpTooltip';
-import { useAuth } from '../../../App'; 
+import { useAuth } from '../../../App';
 
 const FeeTypesPage: React.FC = () => {
   const { isTenantAdmin } = useAuth();
@@ -87,7 +87,7 @@ const FeeTypesPage: React.FC = () => {
     setShowForm(false);
     setTypeToEdit(null);
   };
-  
+
   if (!isTenantAdmin && !loading) {
     return (
         <div className="p-4 md:p-6">

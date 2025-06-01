@@ -43,7 +43,7 @@ const CoursePeriodsPage: React.FC = () => {
         .order('full_name', { ascending: true });
       if (teachersError) throw teachersError;
       setTeachers(teachersData || []);
-      
+
       // Placeholder for Marking Periods
       const placeholderMPs = [{ id: 'placeholder_mp1', name: 'Semester 1 (Placeholder)' }, { id: 'placeholder_mp2', name: 'Semester 2 (Placeholder)' }];
       setMarkingPeriods(placeholderMPs);

@@ -7,18 +7,18 @@ import { useAuth } from '../../../App';
 
 interface CoursePeriodForDisplay {
     id: string;
-    name: string; 
-    courses?: { name?: string }; 
+    name: string;
+    courses?: { name?: string };
   }
 
 const GradebookPage: React.FC = () => {
   const { user, isTeacher, isTenantAdmin } = useAuth();
   const [selectedCoursePeriodId, setSelectedCoursePeriodId] = useState<string | null>(null);
   const [selectedCoursePeriodName, setSelectedCoursePeriodName] = useState<string | null>(null);
-  
+
   const [loading, setLoading] = useState(false); // General loading for page or initial selections
   const [error, setError] = useState<string | null>(null);
-  
+
   const handleCoursePeriodSelect = async (coursePeriodId: string) => {
     setSelectedCoursePeriodId(coursePeriodId);
     if (coursePeriodId) {
@@ -41,7 +41,7 @@ const GradebookPage: React.FC = () => {
         setSelectedCoursePeriodName(null);
     }
   };
-  
+
   if (!isTeacher && !isTenantAdmin) {
     return <p className="p-4 text-red-500">You do not have permission to manage gradebooks.</p>;
   }
@@ -55,7 +55,7 @@ const GradebookPage: React.FC = () => {
         </div>
       </div>
 
-      <SelectCoursePeriodForGradebook 
+      <SelectCoursePeriodForGradebook
         onCoursePeriodSelect={handleCoursePeriodSelect}
         currentSelection={selectedCoursePeriodId}
       />
@@ -67,8 +67,8 @@ const GradebookPage: React.FC = () => {
       )}
 
       {!loading && selectedCoursePeriodId && (
-        <GradebookSheet 
-            coursePeriodId={selectedCoursePeriodId} 
+        <GradebookSheet
+            coursePeriodId={selectedCoursePeriodId}
             coursePeriodName={selectedCoursePeriodName || undefined}
         />
       )}

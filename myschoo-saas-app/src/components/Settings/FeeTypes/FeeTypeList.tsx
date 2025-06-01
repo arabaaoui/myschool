@@ -53,8 +53,8 @@ const FeeTypeList: React.FC<FeeTypeListProps> = ({
               <td className="hidden md:table-cell px-4 py-3 sm:px-6 sm:py-4 whitespace-nowrap">
                 <span
                     className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                    type.is_active 
-                        ? 'bg-green-100 text-green-800' 
+                    type.is_active
+                        ? 'bg-green-100 text-green-800'
                         : 'bg-red-100 text-red-800'
                     }`}
                 >

@@ -14,7 +14,7 @@ const MessagingPage: React.FC = () => {
   const [currentThreadParticipants, setCurrentThreadParticipants] = useState<{id: string, name: string}[]>([]);
 
   const [showNewMessageForm, setShowNewMessageForm] = useState(false);
-  
+
   const [loadingThreads, setLoadingThreads] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -32,7 +32,7 @@ const MessagingPage: React.FC = () => {
           message_threads (
             id,
             subject,
-            updated_at, 
+            updated_at,
             messages ( content, created_at, sender_id ),
             participants:message_thread_participants (
               user_id,
@@ -49,10 +49,10 @@ const MessagingPage: React.FC = () => {
 
       const formattedThreads = (data || []).map((mtp: any) => {
         const thread = mtp.message_threads;
-        const lastMessage = thread.messages && thread.messages.length > 0 
-            ? thread.messages.sort((a:any,b:any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())[0] 
+        const lastMessage = thread.messages && thread.messages.length > 0
+            ? thread.messages.sort((a:any,b:any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())[0]
             : null;
-        
+
         const participants = (thread.participants || [])
             .filter((p: any) => p.user_profiles && p.user_id !== user.id) // Exclude self, ensure profile exists
             .map((p: any) => ({
@@ -73,7 +73,7 @@ const MessagingPage: React.FC = () => {
           messages: thread.messages // Keep messages if needed for snippet, already sorted by created_at desc in subquery if done there
         };
       }).filter(t => t !== null) as MessageThreadDisplay[];
-      
+
       setThreads(formattedThreads);
 
     } catch (err: any) {
@@ -138,7 +138,7 @@ const MessagingPage: React.FC = () => {
     setShowNewMessageForm(!showNewMessageForm);
     setSelectedThreadId(null); // Deselect any active thread
   };
-  
+
   const handleNewThreadCreated = (newThreadId: string) => {
       fetchThreads(); // Refresh thread list
       setSelectedThreadId(newThreadId); // Select the new thread
@@ -160,11 +160,11 @@ const MessagingPage: React.FC = () => {
       </div>
 
       {error && <p className="m-4 text-red-600 bg-red-100 p-3 rounded-md text-sm">{error}</p>}
-      
+
       {showNewMessageForm ? (
-        <StartNewMessageForm 
-            onNewThreadCreated={handleNewThreadCreated} 
-            onCancel={handleNewMessageFormToggle} 
+        <StartNewMessageForm
+            onNewThreadCreated={handleNewThreadCreated}
+            onCancel={handleNewMessageFormToggle}
         />
       ) : (
         <div className="flex flex-col md:flex-row h-[calc(100%-80px)] md:h-[calc(100%-60px)] bg-white shadow-lg rounded-md overflow-hidden">
@@ -178,8 +178,8 @@ const MessagingPage: React.FC = () => {
             />
           </div>
           <div className="flex-grow h-full"> {/* Ensure MessageView takes remaining height */}
-            <MessageView 
-                threadId={selectedThreadId} 
+            <MessageView
+                threadId={selectedThreadId}
                 onMessageSent={fetchThreads} // Refresh threads to update snippet/time/unread
                 participants={currentThreadParticipants}
             />

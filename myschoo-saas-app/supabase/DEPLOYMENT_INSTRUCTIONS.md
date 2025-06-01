@@ -32,7 +32,7 @@ This document provides instructions for deploying the necessary SQL functions an
     1.  `myschoo-saas-app/supabase/reports/student_progress_report_view.sql`
     2.  `myschoo-saas-app/supabase/reports/attendance_summary_report_view.sql`
     3.  `myschoo-saas-app/supabase/reports/course_period_overall_grades_view.sql`
-    4.  `myschoo-saas-app/supabase/reports/report_card_data_view.sql` 
+    4.  `myschoo-saas-app/supabase/reports/report_card_data_view.sql`
 *   **How:**
     1.  For each file, navigate to your Supabase project dashboard.
     2.  Go to the "SQL Editor" section.

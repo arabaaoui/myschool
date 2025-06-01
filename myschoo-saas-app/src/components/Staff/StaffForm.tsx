@@ -16,7 +16,7 @@ const StaffForm: React.FC<StaffFormProps> = ({ staffMemberToEdit, onSave, onCanc
   const [formData, setFormData] = useState<UserProfile>({
     ...staffMemberToEdit,
     // Ensure is_active is a boolean, defaulting to true if undefined from staffMemberToEdit
-    is_active: staffMemberToEdit.is_active === undefined ? true : staffMemberToEdit.is_active, 
+    is_active: staffMemberToEdit.is_active === undefined ? true : staffMemberToEdit.is_active,
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -30,7 +30,7 @@ const StaffForm: React.FC<StaffFormProps> = ({ staffMemberToEdit, onSave, onCanc
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
-    
+
     if (type === 'checkbox') {
         const { checked } = e.target as HTMLInputElement;
         setFormData((prev) => ({ ...prev, [name]: checked }));
@@ -73,7 +73,7 @@ const StaffForm: React.FC<StaffFormProps> = ({ staffMemberToEdit, onSave, onCanc
         .single();
 
       if (updateError) throw updateError;
-      
+
       // Supabase returns the updated record in `data`.
       // We should merge this with any fields not sent in `updates` if necessary,
       // but since we're selecting the whole record back, `data` should be complete.
@@ -110,7 +110,7 @@ const StaffForm: React.FC<StaffFormProps> = ({ staffMemberToEdit, onSave, onCanc
           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 sm:text-sm"
         />
       </div>
-      
+
       {/* Full Name */}
       <div>
         <label htmlFor="full_name" className="flex items-center text-sm font-medium text-gray-700">
@@ -148,7 +148,7 @@ const StaffForm: React.FC<StaffFormProps> = ({ staffMemberToEdit, onSave, onCanc
           ))}
         </select>
       </div>
-      
+
       {/* Active Status Checkbox */}
       <div className="flex items-center">
         <input

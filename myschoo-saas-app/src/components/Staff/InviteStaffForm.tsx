@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
-import { supabase } from '../../supabaseClient'; 
+import { supabase } from '../../supabaseClient';
 import HelpTooltip from '../common/HelpTooltip';
-import { useAuth } from '../../App'; 
+import { useAuth } from '../../App';
 import { useToasts } from '../../App'; // Import useToasts
 
-const STAFF_ROLES_FOR_INVITE = ['teacher', 'support_staff', 'admin']; 
+const STAFF_ROLES_FOR_INVITE = ['teacher', 'support_staff', 'admin'];
 
 interface InviteStaffFormProps {
-  onInvitationSent: () => void; 
+  onInvitationSent: () => void;
   onCancel: () => void;
 }
 
 const InviteStaffForm: React.FC<InviteStaffFormProps> = ({ onInvitationSent, onCancel }) => {
-  const { session } = useAuth(); 
+  const { session } = useAuth();
   const toasts = useToasts(); // Use the toasts hook
   const [email, setEmail] = useState('');
-  const [role, setRole] = useState<string>(STAFF_ROLES_FOR_INVITE[0]); 
+  const [role, setRole] = useState<string>(STAFF_ROLES_FOR_INVITE[0]);
   const [fullName, setFullName] = useState('');
-  
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null); // Keep local error for form-specific display if needed
   // const [successMessage, setSuccessMessage] = useState<string | null>(null); // Replaced by toasts
@@ -33,9 +33,9 @@ const InviteStaffForm: React.FC<InviteStaffFormProps> = ({ onInvitationSent, onC
 
     try {
       const { data, error: funcError } = await supabase.functions.invoke('invite-user', {
-        body: { 
-            email, 
-            role, 
+        body: {
+            email,
+            role,
             full_name: fullName.trim() === '' ? undefined : fullName.trim(),
         },
       });
@@ -44,9 +44,9 @@ const InviteStaffForm: React.FC<InviteStaffFormProps> = ({ onInvitationSent, onC
         let readableError = funcError.message;
         try {
             const parsedError = JSON.parse(funcError.message);
-            if (parsedError && parsedError.error) { 
+            if (parsedError && parsedError.error) {
                 readableError = parsedError.error;
-            } else if (parsedError && parsedError.message) { 
+            } else if (parsedError && parsedError.message) {
                  readableError = parsedError.message;
             }
         } catch (e) { /* ignore parsing error, use original message */ }
@@ -59,7 +59,7 @@ const InviteStaffForm: React.FC<InviteStaffFormProps> = ({ onInvitationSent, onC
             setError(`Invitation failed: ${readableError}`); // Show form-specific error
             toasts.showErrorToast(`Invitation failed: ${readableError}`); // Also show toast
         }
-        throw new Error(readableError); 
+        throw new Error(readableError);
       }
 
       console.log('Invite function response:', data);
@@ -67,10 +67,10 @@ const InviteStaffForm: React.FC<InviteStaffFormProps> = ({ onInvitationSent, onC
       setEmail('');
       setRole(STAFF_ROLES_FOR_INVITE[0]);
       setFullName('');
-      onInvitationSent(); 
+      onInvitationSent();
     } catch (err: any) {
       console.error('Error sending invitation:', err);
-      if (!error) { 
+      if (!error) {
         const message = err.message || 'An unexpected error occurred while sending invitation.';
         setError(message); // Set local error if not already set by specific checks
         toasts.showErrorToast(message);
@@ -105,7 +105,7 @@ const InviteStaffForm: React.FC<InviteStaffFormProps> = ({ onInvitationSent, onC
           placeholder="user@example.com"
         />
       </div>
-      
+
       <div>
         <label htmlFor="invite_full_name" className="flex items-center text-sm font-medium text-gray-700">
           Full Name (Optional)

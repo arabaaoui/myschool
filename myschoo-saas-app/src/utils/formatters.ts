@@ -18,7 +18,7 @@ export const formatDateToLong = (
     // If it's YYYY-MM-DD, appending T00:00:00Z makes it UTC.
     const dateInput = dateString.includes('T') ? dateString : `${dateString}T00:00:00Z`;
     const date = new Date(dateInput);
-    
+
     // Check if the date is valid after parsing
     if (isNaN(date.getTime())) {
       return 'N/A';

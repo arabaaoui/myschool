@@ -63,7 +63,7 @@ const SubjectForm: React.FC<SubjectFormProps> = ({ subjectToEdit, onSave, onCanc
         resultSubject = data as Subject;
       } else {
         // tenant_id will be set by RLS policy or database default if get_current_tenant_id() is available
-        const { id, tenant_id, ...insertData } = dataToSave; 
+        const { id, tenant_id, ...insertData } = dataToSave;
         const { data, error: insertError } = await supabase
           .from('subjects')
           .insert(insertData)

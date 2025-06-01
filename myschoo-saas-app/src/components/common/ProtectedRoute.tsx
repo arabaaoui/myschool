@@ -29,7 +29,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ allowedRoles, children 
       // User does not have the required role, redirect to an unauthorized page or home
       // For simplicity, redirecting to home/dashboard. A dedicated /unauthorized page is better.
       console.warn(`User with role '${userRole}' attempted to access a route restricted to roles: ${allowedRoles.join(', ')}`);
-      return <Navigate to="/" state={{ from: location }} replace />; 
+      return <Navigate to="/" state={{ from: location }} replace />;
     }
   }
 

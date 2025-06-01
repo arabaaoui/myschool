@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Import Link
 import HelpTooltip from '../common/HelpTooltip';
-import { useAuth } from '../../App'; 
+import { useAuth } from '../../App';
 
 // Removed onNavigate prop as navigation is now handled by <Link>
 // interface ReportsLandingPageProps {
@@ -12,21 +12,21 @@ const ReportsLandingPage: React.FC = () => {
   const { isTeacher, isTenantAdmin } = useAuth();
 
   const reports = [
-    { 
-      key: 'studentProgress', 
+    {
+      key: 'studentProgress',
       path: 'student-progress', // Path for react-router Link
-      title: 'Student Progress Report', 
+      title: 'Student Progress Report',
       description: 'View detailed academic progress for individual students, including grades and assignments.',
       helpKey: 'report_studentProgress_intro',
-      allowed: isTeacher || isTenantAdmin, 
+      allowed: isTeacher || isTenantAdmin,
     },
-    { 
-      key: 'attendanceSummary', 
+    {
+      key: 'attendanceSummary',
       path: 'attendance-summary',
-      title: 'Attendance Summary Report', 
+      title: 'Attendance Summary Report',
       description: 'Generate summaries of student attendance for classes, specific students, or date ranges.',
       helpKey: 'report_attendanceSummary_intro',
-      allowed: isTeacher || isTenantAdmin, 
+      allowed: isTeacher || isTenantAdmin,
     },
     {
       key: 'reportCards',
@@ -52,8 +52,8 @@ const ReportsLandingPage: React.FC = () => {
       {availableReports.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {availableReports.map((report) => (
-            <div 
-              key={report.key} 
+            <div
+              key={report.key}
               className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between"
             >
               <div>

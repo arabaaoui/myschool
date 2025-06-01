@@ -24,7 +24,7 @@ serve(async (req: Request) => {
       Deno.env.get("SUPABASE_URL")!,
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!, // Use service role for admin actions
     );
-    
+
     // Get inviting admin's details from their JWT to extract tenant_id
     // This requires the Edge Function to be called with the admin's auth token.
     // The Supabase client on the frontend automatically includes this.
@@ -32,7 +32,7 @@ serve(async (req: Request) => {
     // For simplicity, this step is often done by trusting the `auth.uid()` and then fetching admin's profile.
     // However, a more direct way if the function is called by an authenticated admin,
     // is to get their user data which includes app_metadata.
-    
+
     // The requestor's JWT should be implicitly passed by the client when calling the function.
     // We need to get the current user to extract their tenant_id.
     const { data: { user: inviterUser }, error: inviterError } = await supabaseAdmin.auth.getUser(
@@ -56,7 +56,7 @@ serve(async (req: Request) => {
       console.error("Inviter tenant ID not found in JWT app_metadata.");
       return new Response("Forbidden: Inviter tenant not identified.", { status: 403 });
     }
-    
+
     console.log(`Invite initiated by admin ${inviterUser.email} from tenant ${inviterTenantId}`);
 
 
@@ -67,7 +67,7 @@ serve(async (req: Request) => {
     if (!payload.email || !payload.role) {
       return new Response("Bad Request: Missing email or role in payload.", { status: 400 });
     }
-    
+
     // Validate role if necessary (e.g. ensure it's a valid role string)
     const validRoles = ['teacher', 'admin', 'support_staff']; // Example roles
     if (!validRoles.includes(payload.role)) {
@@ -88,7 +88,7 @@ serve(async (req: Request) => {
     if (payload.redirect_to) {
       inviteOptions.redirectTo = payload.redirect_to;
     }
-    
+
     console.log("Attempting to invite user with options:", JSON.stringify(inviteOptions, null, 2));
 
     const { data: inviteData, error: inviteError } = await supabaseAdmin.auth.admin.inviteUserByEmail(
@@ -128,7 +128,7 @@ serve(async (req: Request) => {
 To deploy (example commands, adjust as needed):
 1. Ensure Supabase CLI is installed and you are logged in.
 2. Navigate to your Supabase project root in the CLI (e.g., `cd myschoo-saas-app`).
-3. Run: supabase functions deploy invite-user --no-verify-jwt 
+3. Run: supabase functions deploy invite-user --no-verify-jwt
    (Or `supabase functions deploy invite-user --project-ref YOUR_PROJECT_REF --no-verify-jwt` if not in linked dir)
 
 Required Environment Variables in Supabase Edge Function settings:

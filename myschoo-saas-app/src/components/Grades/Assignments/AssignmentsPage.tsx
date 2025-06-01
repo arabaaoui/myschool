@@ -9,22 +9,22 @@ import { useAuth } from '../../../App';
 
 interface CoursePeriodForDisplay {
     id: string;
-    name: string; 
-    courses?: { name?: string }; 
+    name: string;
+    courses?: { name?: string };
   }
 
 const AssignmentsPage: React.FC = () => {
   const { user, isTeacher, isTenantAdmin } = useAuth();
   const [selectedCoursePeriodId, setSelectedCoursePeriodId] = useState<string | null>(null);
   const [selectedCoursePeriodName, setSelectedCoursePeriodName] = useState<string | null>(null);
-  
+
   const [assignments, setAssignments] = useState<Assignment[]>([]);
   const [assignmentTypes, setAssignmentTypes] = useState<AssignmentType[]>([]);
-  
+
   const [loadingAssignments, setLoadingAssignments] = useState(false);
   const [loadingTypes, setLoadingTypes] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
+
   const [showForm, setShowForm] = useState(false);
   const [assignmentToEdit, setAssignmentToEdit] = useState<Assignment | null>(null);
 
@@ -150,7 +150,7 @@ const AssignmentsPage: React.FC = () => {
     setShowForm(false);
     setAssignmentToEdit(null);
   };
-  
+
   if (!isTeacher && !isTenantAdmin) {
     return <p className="p-4 text-red-500">You do not have permission to manage assignments.</p>;
   }
@@ -172,8 +172,8 @@ const AssignmentsPage: React.FC = () => {
         )}
       </div>
 
-      <SelectCoursePeriodForAssignments 
-        onCoursePeriodSelect={handleCoursePeriodSelect} 
+      <SelectCoursePeriodForAssignments
+        onCoursePeriodSelect={handleCoursePeriodSelect}
         currentSelection={selectedCoursePeriodId}
       />
 

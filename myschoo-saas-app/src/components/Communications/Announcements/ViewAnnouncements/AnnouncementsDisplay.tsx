@@ -40,17 +40,17 @@ const AnnouncementsDisplay: React.FC<AnnouncementsDisplayProps> = ({ limit }) =>
         .eq('is_published', true)
         .lte('start_date', new Date().toISOString()) // Start date is now or in the past
         // End date is NULL (ongoing) OR in the future
-        .or(`end_date.is.null,end_date.gte.${new Date().toISOString()}`) 
+        .or(`end_date.is.null,end_date.gte.${new Date().toISOString()}`)
         .order('start_date', { ascending: false });
 
       if (limit) {
         query = query.limit(limit);
       }
-      
+
       const { data, error: fetchError } = await query;
 
       if (fetchError) throw fetchError;
-      
+
       const displayData = (data || []).map(ann => ({
         ...ann,
         creator_name: ann.user_profiles?.full_name || ann.user_profiles?.email || 'System',
@@ -68,10 +68,10 @@ const AnnouncementsDisplay: React.FC<AnnouncementsDisplayProps> = ({ limit }) =>
   useEffect(() => {
     fetchViewableAnnouncements();
   }, [fetchViewableAnnouncements]);
-  
+
   const formatDate = (dateString?: string | null) => {
     if (!dateString) return 'N/A';
-    return new Date(dateString).toLocaleDateString(undefined, { 
+    return new Date(dateString).toLocaleDateString(undefined, {
         year: 'numeric', month: 'long', day: 'numeric'
     });
   };
@@ -97,30 +97,30 @@ const AnnouncementsDisplay: React.FC<AnnouncementsDisplayProps> = ({ limit }) =>
     <div className="space-y-6">
       {announcements.map((ann) => {
         const isExpanded = expandedAnnouncementId === ann.id;
-        const displayContent = isExpanded || !ann.content || ann.content.length <= 200 
-            ? ann.content 
+        const displayContent = isExpanded || !ann.content || ann.content.length <= 200
+            ? ann.content
             : `${ann.content.substring(0, 200)}...`;
 
         return (
             <div key={ann.id} className="bg-white shadow-lg rounded-lg p-6 transition-all duration-300 ease-in-out">
                 <h3 className="text-xl font-semibold text-indigo-700 mb-2">{ann.title}</h3>
-                <p 
+                <p
                     className={`text-gray-700 text-sm leading-relaxed whitespace-pre-wrap ${isExpanded ? '' : 'max-h-24 overflow-hidden'}`}
                     style={{ WebkitLineClamp: isExpanded ? 'none' : 3, display: '-webkit-box', WebkitBoxOrient: 'vertical', overflow: 'hidden', textOverflow: 'ellipsis'}}
                 >
                     {displayContent}
                 </p>
                 {!isExpanded && ann.content && ann.content.length > 200 && (
-                    <button 
-                        onClick={() => toggleExpand(ann.id!)} 
+                    <button
+                        onClick={() => toggleExpand(ann.id!)}
                         className="text-indigo-600 hover:text-indigo-800 text-sm font-medium mt-2"
                     >
                         Read More
                     </button>
                 )}
                 {isExpanded && (
-                     <button 
-                        onClick={() => toggleExpand(ann.id!)} 
+                     <button
+                        onClick={() => toggleExpand(ann.id!)}
                         className="text-indigo-600 hover:text-indigo-800 text-sm font-medium mt-2"
                     >
                         Show Less

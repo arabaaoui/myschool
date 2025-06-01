@@ -24,7 +24,7 @@ const LinkParentStudentForm: React.FC<LinkParentStudentFormProps> = ({ onLinkCre
 
   const [parents, setParents] = useState<UserProfile[]>([]);
   const [students, setStudents] = useState<Student[]>([]);
-  
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loadingDropdowns, setLoadingDropdowns] = useState(true);
@@ -89,7 +89,7 @@ const LinkParentStudentForm: React.FC<LinkParentStudentFormProps> = ({ onLinkCre
         .single();
 
       if (insertError) throw insertError;
-      
+
       onLinkCreated(data as ParentStudentLink);
       // Reset form
       setParentUserId('');
@@ -108,7 +108,7 @@ const LinkParentStudentForm: React.FC<LinkParentStudentFormProps> = ({ onLinkCre
       setLoading(false);
     }
   };
-  
+
   if (loadingDropdowns) {
     return <p className="text-center text-gray-500 py-4">Loading form data...</p>;
   }
@@ -139,19 +139,19 @@ const LinkParentStudentForm: React.FC<LinkParentStudentFormProps> = ({ onLinkCre
           {students.map(s => <option key={s.id} value={s.id!}>{s.last_name}, {s.first_name} ({s.student_identifier || 'ID N/A'})</option>)}
         </select>
       </div>
-      
+
       <div>
         <label htmlFor="relationship_type" className="flex items-center text-sm font-medium text-gray-700">
           Relationship Type <span className="text-red-500 ml-1">*</span>
           <HelpTooltip helpKey="linkParentStudentForm_relationship" />
         </label>
-        <input 
-            type="text" 
-            id="relationship_type" 
-            name="relationship_type" 
-            value={relationshipType} 
-            onChange={(e) => setRelationshipType(e.target.value)} 
-            required 
+        <input
+            type="text"
+            id="relationship_type"
+            name="relationship_type"
+            value={relationshipType}
+            onChange={(e) => setRelationshipType(e.target.value)}
+            required
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             placeholder="e.g., Mother, Father, Guardian"
         />

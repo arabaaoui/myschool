@@ -32,7 +32,7 @@ const AttendanceCodeForm: React.FC<AttendanceCodeFormProps> = ({ codeToEdit, onS
 
   useEffect(() => {
     if (codeToEdit) {
-      setFormData({ 
+      setFormData({
         ...codeToEdit,
         is_present_code: codeToEdit.is_present_code || false,
         is_absent_code: codeToEdit.is_absent_code || false,
@@ -67,7 +67,7 @@ const AttendanceCodeForm: React.FC<AttendanceCodeFormProps> = ({ codeToEdit, onS
 
     try {
       let resultCode: AttendanceCode;
-      const dataToSave = { 
+      const dataToSave = {
         ...formData,
         sort_order: formData.sort_order === null ? undefined : Number(formData.sort_order)
        };
@@ -141,7 +141,7 @@ const AttendanceCodeForm: React.FC<AttendanceCodeFormProps> = ({ codeToEdit, onS
           placeholder="e.g., Present, Absent Unexcused"
         />
       </div>
-      
+
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="flex items-start">
             <div className="flex items-center h-5">

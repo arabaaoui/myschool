@@ -60,7 +60,7 @@ const CommentEntryForm: React.FC<CommentEntryFormProps> = ({
         comment: commentText.trim() === '' ? null : commentText.trim(),
         created_by_user_id: user.id, // Will be updated on each save by the current user
       };
-      
+
       let savedData: ReportCardCourseComment;
 
       if (existingComment?.id) {
@@ -77,7 +77,7 @@ const CommentEntryForm: React.FC<CommentEntryFormProps> = ({
         // Insert new comment (or upsert if preferred for simplicity, though unique constraint handles it)
         const { data, error: insertError } = await supabase
           .from('report_card_course_comments')
-          .upsert(commentData, { 
+          .upsert(commentData, {
             onConflict: 'tenant_id, student_id, course_period_id, marking_period_id',
             // ignoreDuplicates: false // Default, will update on conflict
           })
@@ -103,7 +103,7 @@ const CommentEntryForm: React.FC<CommentEntryFormProps> = ({
       </h5>
       {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
       {successMessage && <p className="text-green-600 text-sm mb-2">{successMessage}</p>}
-      
+
       <textarea
         name="comment"
         value={commentText}

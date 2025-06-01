@@ -14,15 +14,15 @@ const CourseCommentsPage: React.FC = () => {
   const [selectedCoursePeriodName, setSelectedCoursePeriodName] = useState<string>('');
   const [selectedMarkingPeriodId, setSelectedMarkingPeriodId] = useState<string | null>(null);
   const [selectedMarkingPeriodName, setSelectedMarkingPeriodName] = useState<string>('');
-  
+
   const [academicYearIdForSelectedCP, setAcademicYearIdForSelectedCP] = useState<string | null>(null);
 
   const [enrolledStudents, setEnrolledStudents] = useState<StudentEnrollmentWithStudent[]>([]);
   const [selectedStudentId, setSelectedStudentId] = useState<string | null>(null);
   const [selectedStudentName, setSelectedStudentName] = useState<string>('');
-  
+
   const [existingComment, setExistingComment] = useState<ReportCardCourseComment | null>(null);
-  
+
   const [loadingStudents, setLoadingStudents] = useState(false);
   const [loadingComment, setLoadingComment] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -58,7 +58,7 @@ const CourseCommentsPage: React.FC = () => {
       const { data, error: fetchError } = await supabase
         .from('student_enrollments')
         .select(`
-          id, 
+          id,
           student_id,
           course_period_id,
           students (id, first_name, last_name, student_identifier)
@@ -132,7 +132,7 @@ const CourseCommentsPage: React.FC = () => {
     setSelectedStudentId(null); // Reset student when marking period changes
     setExistingComment(null);
   };
-  
+
   const handleStudentSelect = (studentId: string, name: string) => {
     setSelectedStudentId(studentId);
     setSelectedStudentName(name);
@@ -161,8 +161,8 @@ const CourseCommentsPage: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <SelectCoursePeriodForComments onCoursePeriodSelect={handleCoursePeriodSelect} currentSelection={selectedCoursePeriodId} />
         {selectedCoursePeriodId && (
-          <SelectMarkingPeriodForComments 
-            onMarkingPeriodSelect={handleMarkingPeriodSelect} 
+          <SelectMarkingPeriodForComments
+            onMarkingPeriodSelect={handleMarkingPeriodSelect}
             currentSelection={selectedMarkingPeriodId}
             academicYearId={academicYearIdForSelectedCP}
           />
@@ -198,7 +198,7 @@ const CourseCommentsPage: React.FC = () => {
           </div>
         </div>
       )}
-      
+
       {(!selectedCoursePeriodId || !selectedMarkingPeriodId) && !loadingStudents && (
           <p className="text-center text-gray-500 py-4">Please select a class and a marking period to manage comments.</p>
       )}

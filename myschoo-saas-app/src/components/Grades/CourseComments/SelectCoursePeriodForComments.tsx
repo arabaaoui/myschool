@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../../supabaseClient';
-import { useAuth } from '../../../App'; 
+import { useAuth } from '../../../App';
 import HelpTooltip from '../../common/HelpTooltip';
 
 interface CoursePeriodForDisplay {
   id: string;
-  name: string; 
-  courses?: { name?: string }; 
-  marking_periods?: { name?: string }; 
+  name: string;
+  courses?: { name?: string };
+  marking_periods?: { name?: string };
 }
 
 interface SelectCoursePeriodForCommentsProps {
@@ -15,9 +15,9 @@ interface SelectCoursePeriodForCommentsProps {
   currentSelection?: string | null;
 }
 
-const SelectCoursePeriodForComments: React.FC<SelectCoursePeriodForCommentsProps> = ({ 
-    onCoursePeriodSelect, 
-    currentSelection 
+const SelectCoursePeriodForComments: React.FC<SelectCoursePeriodForCommentsProps> = ({
+    onCoursePeriodSelect,
+    currentSelection
 }) => {
   const { user } = useAuth();
   const [coursePeriods, setCoursePeriods] = useState<CoursePeriodForDisplay[]>([]);
@@ -41,9 +41,9 @@ const SelectCoursePeriodForComments: React.FC<SelectCoursePeriodForCommentsProps
             id,
             name,
             courses (name),
-            marking_periods (name) 
+            marking_periods (name)
           `)
-          .eq('teacher_id', user.id) 
+          .eq('teacher_id', user.id)
           .order('name', { ascending: true });
 
         if (fetchError) throw fetchError;
@@ -75,7 +75,7 @@ const SelectCoursePeriodForComments: React.FC<SelectCoursePeriodForCommentsProps
         onCoursePeriodSelect('', 'None');
     }
   };
-  
+
   if (error) { // Show error prominently if loading fails
     return <p className="text-sm text-red-500 py-2 bg-red-50 p-2 rounded">{error}</p>;
   }

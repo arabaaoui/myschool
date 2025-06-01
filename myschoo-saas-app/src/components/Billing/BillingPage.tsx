@@ -10,20 +10,20 @@ type BillingView = 'assignFee' | 'recordPayment' | 'viewAccount';
 const BillingPage: React.FC = () => {
   const { isTenantAdmin } = useAuth();
   const [currentView, setCurrentView] = useState<BillingView>('viewAccount');
-  
+
   // State to refresh StudentAccountView after a fee or payment is made, if needed
-  const [refreshKey, setRefreshKey] = useState(0); 
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const handleFeeAssigned = (fee: StudentFee) => {
     // Optionally, you could add the new fee to a local list if displaying all fees on this page
     // For now, just refresh the StudentAccountView if it's the current view or next view
-    setRefreshKey(prev => prev + 1); 
+    setRefreshKey(prev => prev + 1);
   };
 
   const handlePaymentRecorded = (payment: StudentPayment) => {
     setRefreshKey(prev => prev + 1);
   };
-  
+
   if (!isTenantAdmin) {
     return <p className="p-4 text-red-500">You do not have permission to access the billing module.</p>;
   }
@@ -58,7 +58,7 @@ const BillingPage: React.FC = () => {
       <div className="mt-6">
         {currentView === 'assignFee' && <AssignFeeForm onFeeAssigned={handleFeeAssigned} />}
         {currentView === 'recordPayment' && <RecordPaymentForm onPaymentRecorded={handlePaymentRecorded} />}
-        {currentView === 'viewAccount' && <StudentAccountView key={refreshKey} />} 
+        {currentView === 'viewAccount' && <StudentAccountView key={refreshKey} />}
       </div>
     </div>
   );

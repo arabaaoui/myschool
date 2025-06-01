@@ -9,7 +9,7 @@ const ReportCardsPage: React.FC = () => {
   const { isTeacher, isTenantAdmin } = useAuth();
   const [selectedStudentId, setSelectedStudentId] = useState<string | null>(null);
   const [selectedMarkingPeriodId, setSelectedMarkingPeriodId] = useState<string | null>(null);
-  
+
   const [reportCardData, setReportCardData] = useState<ReportCardData[]>([]);
   const [studentNameForReport, setStudentNameForReport] = useState<string>('');
   const [markingPeriodNameForReport, setMarkingPeriodNameForReport] = useState<string>('');
@@ -48,7 +48,7 @@ const ReportCardsPage: React.FC = () => {
         // Try to get student name even if no report data
         const { data: studentData } = await supabase.from('students').select('first_name, last_name').eq('id', studentId).single();
         setStudentNameForReport(studentData ? `${studentData.first_name} ${studentData.last_name}` : 'Selected Student');
-        
+
         const { data: mpData } = await supabase.from('marking_periods').select('name').eq('id', markingPeriodId).single();
         setMarkingPeriodNameForReport(mpData ? mpData.name : 'Selected Period');
 
@@ -62,7 +62,7 @@ const ReportCardsPage: React.FC = () => {
       setLoading(false);
     }
   }, []);
-  
+
   if (!isTeacher && !isTenantAdmin) {
     return <p className="p-4 text-red-500">You do not have permission to view report cards.</p>;
   }
@@ -80,11 +80,11 @@ const ReportCardsPage: React.FC = () => {
 
       {loading && <p className="text-center py-8 text-gray-500">Generating report card...</p>}
       {error && <p className="my-4 text-red-600 bg-red-100 p-3 rounded-md text-sm">{error}</p>}
-      
+
       {!loading && reportCardData.length > 0 && selectedStudentId && selectedMarkingPeriodId && (
         <div className="mt-8">
-          <ReportCardView 
-            data={reportCardData} 
+          <ReportCardView
+            data={reportCardData}
             studentName={studentNameForReport}
             markingPeriodName={markingPeriodNameForReport}
             academicYearName={academicYearNameForReport}

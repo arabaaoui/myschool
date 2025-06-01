@@ -14,9 +14,9 @@ const IncidentDetailsView: React.FC<IncidentDetailsViewProps> = ({ incident, onC
 
   const formatDate = (dateString: string | undefined | null) => {
     if (!dateString) return 'N/A';
-    return new Date(dateString).toLocaleString(undefined, { 
-        year: 'numeric', month: 'long', day: 'numeric', 
-        hour: '2-digit', minute: '2-digit' 
+    return new Date(dateString).toLocaleString(undefined, {
+        year: 'numeric', month: 'long', day: 'numeric',
+        hour: '2-digit', minute: '2-digit'
     });
   };
 
@@ -25,8 +25,8 @@ const IncidentDetailsView: React.FC<IncidentDetailsViewProps> = ({ incident, onC
       <div className="relative bg-white p-6 sm:p-8 rounded-lg shadow-xl w-full max-w-2xl print:shadow-none print:rounded-none print:p-0">
         <div className="flex justify-between items-center border-b pb-3 mb-4 print:hidden">
           <h2 className="text-xl sm:text-2xl font-semibold text-gray-800">Incident Details</h2>
-          <button 
-            onClick={onClose} 
+          <button
+            onClick={onClose}
             className="text-gray-400 hover:text-gray-600 transition-colors"
             aria-label="Close details"
           >
@@ -62,8 +62,8 @@ const IncidentDetailsView: React.FC<IncidentDetailsViewProps> = ({ incident, onC
           <div>
             <h3 className="text-sm font-medium text-gray-500">Status</h3>
             <p className={`text-base font-semibold ${
-                incident.status === 'Resolved' ? 'text-green-600' : 
-                incident.status === 'Escalated' ? 'text-yellow-600' : 
+                incident.status === 'Resolved' ? 'text-green-600' :
+                incident.status === 'Escalated' ? 'text-yellow-600' :
                 'text-blue-600'
             }`}>
                 {incident.status || 'N/A'}
@@ -96,7 +96,7 @@ const IncidentDetailsView: React.FC<IncidentDetailsViewProps> = ({ incident, onC
           >
             Print Details
           </button>
-          <button 
+          <button
             onClick={onClose}
             className="w-full sm:w-auto px-4 py-2 bg-gray-200 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400"
           >

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../../../supabaseClient';
-import { StudentEnrollmentWithStudent } from '../../Attendance/AttendanceSheet'; 
+import { StudentEnrollmentWithStudent } from '../../Attendance/AttendanceSheet';
 import { Assignment } from '../Assignments/AssignmentForm';
-import { StudentGrade } from '../../../types'; 
+import { StudentGrade } from '../../../types';
 import HelpTooltip from '../../common/HelpTooltip';
 import { useAuth } from '../../../App';
 
@@ -11,7 +11,7 @@ export interface AttendanceRecord { // This seems like a leftover type, not used
   student_enrollment_id: string;
   course_period_id: string;
   student_id: string;
-  attendance_date: string; 
+  attendance_date: string;
   attendance_code_id: string;
   taken_by_user_id: string;
   comments?: string | null;
@@ -25,16 +25,16 @@ interface OverallGradeData {
 
 interface GradebookSheetProps {
   coursePeriodId: string;
-  coursePeriodName?: string; 
+  coursePeriodName?: string;
 }
 
 const GradebookSheet: React.FC<GradebookSheetProps> = ({ coursePeriodId, coursePeriodName }) => {
   const { user } = useAuth();
   const [enrolledStudents, setEnrolledStudents] = useState<StudentEnrollmentWithStudent[]>([]);
   const [assignments, setAssignments] = useState<Assignment[]>([]);
-  const [grades, setGrades] = useState<Record<string, Record<string, StudentGrade>>>({}); 
+  const [grades, setGrades] = useState<Record<string, Record<string, StudentGrade>>>({});
   const [overallGrades, setOverallGrades] = useState<Record<string, OverallGradeData>>({}); // { studentId: OverallGradeData }
-  
+
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -51,7 +51,7 @@ const GradebookSheet: React.FC<GradebookSheetProps> = ({ coursePeriodId, courseP
       const { data: enrollmentsData, error: enrollmentsError } = await supabase
         .from('student_enrollments')
         .select(`
-          id, 
+          id,
           student_id,
           course_period_id,
           students (id, first_name, last_name, student_identifier)
@@ -83,7 +83,7 @@ const GradebookSheet: React.FC<GradebookSheetProps> = ({ coursePeriodId, courseP
           .in('assignment_id', assignmentIds)
           .eq('course_period_id', coursePeriodId);
         if (gradesError) throw gradesError;
-        
+
         const gradesMap: Record<string, Record<string, StudentGrade>> = {};
         (gradesData || []).forEach(grade => {
           if (!gradesMap[grade.student_id]) {
@@ -133,17 +133,17 @@ const GradebookSheet: React.FC<GradebookSheetProps> = ({ coursePeriodId, courseP
         [studentId]: {
           ...studentGrades,
           [assignmentId]: {
-            ...existingGrade, 
+            ...existingGrade,
             student_id: studentId,
             assignment_id: assignmentId,
-            course_period_id: coursePeriodId, 
+            course_period_id: coursePeriodId,
             points_earned: newPoints,
-          } as StudentGrade, 
+          } as StudentGrade,
         },
       };
     });
   };
-  
+
   const handleCommentChange = (studentId: string, assignmentId: string, commentText: string) => {
     setGrades(prev => {
       const studentGrades = prev[studentId] || {};
@@ -178,20 +178,20 @@ const GradebookSheet: React.FC<GradebookSheetProps> = ({ coursePeriodId, courseP
 
     for (const studentEnrollment of enrolledStudents) {
       const studentId = studentEnrollment.student_id;
-      const studentEnrollmentId = studentEnrollment.id!; 
+      const studentEnrollmentId = studentEnrollment.id!;
 
       if (grades[studentId]) {
         for (const assignmentId in grades[studentId]) {
           const gradeEntry = grades[studentId][assignmentId];
           const assignment = assignments.find(a => a.id === assignmentId);
 
-          if (gradeEntry.points_earned !== undefined && assignment) { 
+          if (gradeEntry.points_earned !== undefined && assignment) {
             gradesToUpsert.push({
               student_id: studentId,
               assignment_id: assignmentId,
               student_enrollment_id: studentEnrollmentId,
               course_period_id: coursePeriodId,
-              points_earned: gradeEntry.points_earned, 
+              points_earned: gradeEntry.points_earned,
               comments: gradeEntry.comments,
               graded_by_user_id: user.id,
             });
@@ -199,7 +199,7 @@ const GradebookSheet: React.FC<GradebookSheetProps> = ({ coursePeriodId, courseP
         }
       }
     }
-    
+
     if (gradesToUpsert.length === 0) {
         setSuccessMessage("No changes to save.");
         setSaving(false);
@@ -209,8 +209,8 @@ const GradebookSheet: React.FC<GradebookSheetProps> = ({ coursePeriodId, courseP
     try {
       const { error: upsertError } = await supabase
         .from('student_grades')
-        .upsert(gradesToUpsert, { 
-            onConflict: 'assignment_id, student_enrollment_id', 
+        .upsert(gradesToUpsert, {
+            onConflict: 'assignment_id, student_enrollment_id',
         });
 
       if (upsertError) throw upsertError;
@@ -228,7 +228,7 @@ const GradebookSheet: React.FC<GradebookSheetProps> = ({ coursePeriodId, courseP
   if (loading && !enrolledStudents.length) { // Show main loading only if nothing is displayed yet
     return <p className="text-center text-gray-500 py-8">Loading gradebook...</p>;
   }
-  if (error && !saving && !enrolledStudents.length) { 
+  if (error && !saving && !enrolledStudents.length) {
     return <p className="text-center text-red-500 py-4 bg-red-100 p-3 rounded-md">{error}</p>;
   }
   if (enrolledStudents.length === 0 && !loading) {
@@ -246,7 +246,7 @@ const GradebookSheet: React.FC<GradebookSheetProps> = ({ coursePeriodId, courseP
       </h3>
       {successMessage && <p className="m-4 text-green-600 bg-green-100 p-3 rounded-md text-sm">{successMessage}</p>}
       {error && saving && <p className="m-4 text-red-500 bg-red-100 p-3 rounded-md text-sm">{error}</p>}
-      
+
       <div className="overflow-x-auto p-2">
         <table className="min-w-full divide-y divide-gray-200 border border-gray-200">
           <thead className="bg-gray-50">
@@ -290,7 +290,7 @@ const GradebookSheet: React.FC<GradebookSheetProps> = ({ coursePeriodId, courseP
                           onChange={(e) => handleGradeChange(student.id!, assignment.id!, e.target.value)}
                           max={Number(assignment.max_points)}
                           min={0}
-                          step="0.01" 
+                          step="0.01"
                           className="mt-1 block w-20 sm:w-24 px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           placeholder="-"
                         />
@@ -298,8 +298,8 @@ const GradebookSheet: React.FC<GradebookSheetProps> = ({ coursePeriodId, courseP
                     );
                   })}
                   <td className="px-3 py-2 sm:px-4 sm:py-3 whitespace-nowrap text-sm font-semibold">
-                    {overallGrade?.overall_percentage !== null && overallGrade?.overall_percentage !== undefined 
-                        ? `${overallGrade.overall_percentage.toFixed(1)}%` 
+                    {overallGrade?.overall_percentage !== null && overallGrade?.overall_percentage !== undefined
+                        ? `${overallGrade.overall_percentage.toFixed(1)}%`
                         : 'N/A'}
                     {/* {overallGrade?.overall_letter_grade && ` (${overallGrade.overall_letter_grade})`} */}
                   </td>

@@ -24,7 +24,7 @@ export interface StudentEnrollment {
 interface EnrollStudentFormProps {
   onEnrollmentSave: (enrollment: StudentEnrollment) => void;
   // Optional: Pass existing enrollment to edit (e.g., withdrawal date)
-  // enrollmentToEdit?: StudentEnrollment | null; 
+  // enrollmentToEdit?: StudentEnrollment | null;
 }
 
 const EnrollStudentForm: React.FC<EnrollStudentFormProps> = ({ onEnrollmentSave }) => {
@@ -34,7 +34,7 @@ const EnrollStudentForm: React.FC<EnrollStudentFormProps> = ({ onEnrollmentSave 
 
   const [students, setStudents] = useState<Student[]>([]);
   const [coursePeriods, setCoursePeriods] = useState<DisplayCoursePeriod[]>([]);
-  
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loadingDropdowns, setLoadingDropdowns] = useState(true);
@@ -63,7 +63,7 @@ const EnrollStudentForm: React.FC<EnrollStudentFormProps> = ({ onEnrollmentSave 
           `)
           .order('name', { ascending: true });
         if (cpError) throw cpError;
-        
+
         const displayPeriods = (cpData || []).map((cp: any) => ({
           ...cp,
           course_name: cp.courses?.name || 'Unknown Course',
@@ -104,7 +104,7 @@ const EnrollStudentForm: React.FC<EnrollStudentFormProps> = ({ onEnrollmentSave 
         .single();
 
       if (insertError) throw insertError;
-      
+
       onEnrollmentSave(data as StudentEnrollment);
       // Reset form after successful save
       setStudentId('');
@@ -118,7 +118,7 @@ const EnrollStudentForm: React.FC<EnrollStudentFormProps> = ({ onEnrollmentSave 
       setLoading(false);
     }
   };
-  
+
   if (loadingDropdowns) {
     return <p className="text-center text-gray-500 py-4">Loading form data...</p>;
   }
@@ -173,7 +173,7 @@ const EnrollStudentForm: React.FC<EnrollStudentFormProps> = ({ onEnrollmentSave 
           ))}
         </select>
       </div>
-      
+
       {/* Enrollment Date */}
       <div>
         <label htmlFor="enrollment_date" className="flex items-center text-sm font-medium text-gray-700">

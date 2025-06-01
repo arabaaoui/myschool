@@ -109,14 +109,14 @@ const StudentsPage: React.FC = () => {
     setShowForm(false);
     setStudentToEdit(null);
     // Optionally, re-fetch all students to ensure data consistency
-    // fetchStudents(); 
+    // fetchStudents();
   };
 
   const handleFormCancel = () => {
     setShowForm(false);
     setStudentToEdit(null);
   };
-  
+
   const isLoading = loadingStudents || loadingGradeLevels;
 
   return (

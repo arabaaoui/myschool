@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../../supabaseClient';
 import HelpTooltip from '../../common/HelpTooltip';
-import { Course } from '../Courses/CourseForm'; 
-import { UserProfile } from '../../../types'; 
+import { Course } from '../Courses/CourseForm';
+import { UserProfile } from '../../../types';
 import { MarkingPeriod } from '../../Settings/MarkingPeriods/MarkingPeriodForm'; // Import MarkingPeriod type
 
 export interface CoursePeriod {
   id?: string;
-  tenant_id?: string; 
+  tenant_id?: string;
   course_id: string;
   teacher_id?: string | null;
-  marking_period_id: string; 
+  marking_period_id: string;
   name: string;
   room?: string | null;
   max_seats?: number | null;
@@ -26,7 +26,7 @@ const CoursePeriodForm: React.FC<CoursePeriodFormProps> = ({ periodToEdit, onSav
   const [formData, setFormData] = useState<CoursePeriod>({
     course_id: '',
     teacher_id: null,
-    marking_period_id: '', 
+    marking_period_id: '',
     name: '',
     room: null,
     max_seats: null,
@@ -34,8 +34,8 @@ const CoursePeriodForm: React.FC<CoursePeriodFormProps> = ({ periodToEdit, onSav
   });
 
   const [courses, setCourses] = useState<Course[]>([]);
-  const [teachers, setTeachers] = useState<UserProfile[]>([]); 
-  const [markingPeriods, setMarkingPeriods] = useState<MarkingPeriod[]>([]); 
+  const [teachers, setTeachers] = useState<UserProfile[]>([]);
+  const [markingPeriods, setMarkingPeriods] = useState<MarkingPeriod[]>([]);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -56,13 +56,13 @@ const CoursePeriodForm: React.FC<CoursePeriodFormProps> = ({ periodToEdit, onSav
 
         // Fetch Teachers
         const { data: teachersData, error: teachersError } = await supabase
-          .from('user_profiles') 
-          .select('id, full_name, email') 
-          .eq('role', 'teacher') 
+          .from('user_profiles')
+          .select('id, full_name, email')
+          .eq('role', 'teacher')
           .order('full_name', { ascending: true });
         if (teachersError) throw teachersError;
         setTeachers(teachersData || []);
-        
+
         // Fetch Marking Periods
         const { data: mpData, error: mpError } = await supabase
           .from('marking_periods')
@@ -80,19 +80,19 @@ const CoursePeriodForm: React.FC<CoursePeriodFormProps> = ({ periodToEdit, onSav
       }
     };
     fetchDropdownData();
-  }, []); 
+  }, []);
 
   useEffect(() => {
     if (periodToEdit) {
-      setFormData({ 
+      setFormData({
         ...periodToEdit,
         max_seats: periodToEdit.max_seats === null ? undefined : periodToEdit.max_seats,
        });
     } else {
       setFormData({
         course_id: courses.length > 0 ? courses[0].id : '',
-        teacher_id: null, 
-        marking_period_id: markingPeriods.length > 0 ? markingPeriods[0].id : '', 
+        teacher_id: null,
+        marking_period_id: markingPeriods.length > 0 ? markingPeriods[0].id : '',
         name: '',
         room: null,
         max_seats: null,
@@ -120,10 +120,10 @@ const CoursePeriodForm: React.FC<CoursePeriodFormProps> = ({ periodToEdit, onSav
 
     try {
       let resultPeriod: CoursePeriod;
-      const dataToSave = { 
+      const dataToSave = {
         ...formData,
         max_seats: formData.max_seats === null ? undefined : Number(formData.max_seats),
-        teacher_id: formData.teacher_id === '' ? null : formData.teacher_id, 
+        teacher_id: formData.teacher_id === '' ? null : formData.teacher_id,
       };
 
       if (periodToEdit && periodToEdit.id) {
@@ -153,7 +153,7 @@ const CoursePeriodForm: React.FC<CoursePeriodFormProps> = ({ periodToEdit, onSav
       setLoading(false);
     }
   };
-  
+
   if (loadingDropdowns) {
     return <p className="text-center text-gray-500 py-4">Loading form data...</p>;
   }
@@ -203,7 +203,7 @@ const CoursePeriodForm: React.FC<CoursePeriodFormProps> = ({ periodToEdit, onSav
           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
       </div>
-      
+
       {/* Teacher Dropdown */}
       <div>
         <label htmlFor="teacher_id" className="flex items-center text-sm font-medium text-gray-700">

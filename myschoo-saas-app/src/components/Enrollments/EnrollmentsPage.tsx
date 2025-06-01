@@ -26,14 +26,14 @@ interface DisplayableEnrollment extends StudentEnrollment {
 const EnrollmentsPage: React.FC = () => {
   const { user, isTenantAdmin } = useAuth();
   const [currentView, setCurrentView] = useState<EnrollmentView>('enroll');
-  
+
   const [enrollments, setEnrollments] = useState<DisplayableEnrollment[]>([]);
   const [students, setStudents] = useState<Student[]>([]);
   const [coursePeriods, setCoursePeriods] = useState<DisplayableCoursePeriod[]>([]);
 
   const [selectedStudentId, setSelectedStudentId] = useState<string>('');
   const [selectedCoursePeriodId, setSelectedCoursePeriodId] = useState<string>('');
-  
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [listTitle, setListTitle] = useState<string>("All Current Enrollments");
@@ -51,7 +51,7 @@ const EnrollmentsPage: React.FC = () => {
           course_periods (
             *,
             courses (id, name),
-            user_profiles (id, full_name, email) 
+            user_profiles (id, full_name, email)
           )
         `)
         .order('enrollment_date', { ascending: false });
@@ -70,7 +70,7 @@ const EnrollmentsPage: React.FC = () => {
 
       const { data, error: fetchError } = await query;
       if (fetchError) throw fetchError;
-      
+
       // Manually map course_name if join syntax was tricky for Supabase or if courses table is not directly joined
       const processedData = (data || []).map(e => ({
         ...e,
@@ -108,9 +108,9 @@ const EnrollmentsPage: React.FC = () => {
                 teacher_name: cp.user_profiles?.full_name || cp.user_profiles?.email || 'N/A',
             }));
             setCoursePeriods(displayPeriods);
-            
+
             // Fetch all enrollments initially or based on default filter
-            fetchEnrollmentData(); 
+            fetchEnrollmentData();
 
         } catch (err:any) {
             setError('Failed to load initial page data. ' + err.message);
@@ -143,11 +143,11 @@ const EnrollmentsPage: React.FC = () => {
       setError('Failed to withdraw student. ' + err.message);
     }
   };
-  
+
   const handleFilterChange = () => {
       fetchEnrollmentData(selectedStudentId, selectedCoursePeriodId);
   };
-  
+
   const clearFilters = () => {
       setSelectedStudentId('');
       setSelectedCoursePeriodId('');
@@ -181,7 +181,7 @@ const EnrollmentsPage: React.FC = () => {
           <HelpTooltip helpKey="enrollments_intro" position="right" className="ml-2" />
         </div>
       </div>
-      
+
       <div className="mb-6 bg-white shadow-sm rounded-lg p-2 md:p-3">
         <nav className="flex flex-wrap items-center gap-2 md:gap-3" aria-label="Enrollment Navigation">
           <NavButton view="enroll" label="Enroll Student" />

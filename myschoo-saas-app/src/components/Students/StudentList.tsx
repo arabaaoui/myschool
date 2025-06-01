@@ -4,7 +4,7 @@ import HelpTooltip from '../common/HelpTooltip'; // Import HelpTooltip
 
 interface StudentListProps {
   students: Student[];
-  gradeLevels: { id: string; name: string }[]; 
+  gradeLevels: { id: string; name: string }[];
   onEdit: (student: Student) => void;
   onDelete: (studentId: string) => void;
   loading?: boolean;
@@ -108,7 +108,7 @@ const StudentList: React.FC<StudentListProps> = ({
                     onClick={() => student.id && onDelete(student.id)}
                     className="text-red-600 hover:text-red-900 p-1"
                     title="Delete Student"
-                    disabled={!student.id} 
+                    disabled={!student.id}
                   >
                     Delete
                   </button>
