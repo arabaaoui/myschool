@@ -30,7 +30,7 @@ const AnnouncementForm: React.FC<AnnouncementFormProps> = ({ announcementToEdit,
     content: '',
     start_date: new Date().toISOString().slice(0, 16), // Default to now for datetime-local
     end_date: null,
-    target_roles: [], // Default to empty array (interpreted as "all roles" by RLS if empty/NULL)
+    //target_roles: [], // Default to empty array (interpreted as "all roles" by RLS if empty/NULL)
     is_published: true,
     ...announcementToEdit,
     // Ensure target_roles is always an array for the form state
